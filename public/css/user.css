@@ -1,0 +1,264 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f8f8f8;
+}
+
+.news-section {
+    width: 90%;
+    margin: 20px 0px 20px 0px;
+}
+
+.news-item {
+    display: flex;
+    background: white;
+    padding: 15px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.news-item img {
+    width: 200px;
+    height: 150px;
+    border-radius: 8px;
+    margin-right: 15px;
+}
+
+.news-content {
+    flex: 1;
+}
+
+h2 {
+    font-size: 18px;
+    color: #333;
+    margin-bottom: 8px;
+}
+
+p {
+    font-size: 14px;
+    color: #666;
+    line-height: 1.5;
+}
+
+.date {
+    display: block;
+    font-size: 12px;
+    color: #888;
+    margin-top: 10px;
+}
+.banner img{
+    width: 90%;
+    height: 530px;
+}
+.full{
+    display: flex;
+    margin-left: 200px;
+    margin-right: 200px;
+    margin-top: 40px;
+}
+.trai{
+    width: 65%;
+}
+.phai{
+    width: 35%;
+}
+.news-container {
+    width: 90%;
+    margin: 0px 20px 20px 20px;
+}
+
+.section-title {
+    font-size: 18px;
+    color: #0056b3;
+    font-weight: bold;
+    border-left: 5px solid #0056b3;
+    padding-left: 10px;
+    margin-bottom: 10px;
+}
+
+/* TIN NỔI BẬT */
+.featured-news {
+    background: white;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.news-list {
+    list-style: none;
+    padding: 0;
+}
+
+.news-list li {
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+    margin-bottom: 8px;
+}
+
+.news-list li span i {
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    color: white;
+    background: #0056b3;
+    width: 30px;
+    height: 30px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.news-list li a {
+    text-decoration: none;
+    color: #333;
+}
+
+.news-list li a:hover {
+    color: #0056b3;
+}
+
+/* TIN KHUYẾN MÃI */
+.promo-news {
+    margin-top: 20px;
+}
+
+.promo-large {
+    background: white;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin-bottom: 15px;
+}
+
+.promo-large img {
+    width: 100%;
+    border-radius: 8px;
+}
+
+.promo-large h4 {
+    font-size: 16px;
+    margin-top: 10px;
+    color: #333;
+}
+
+.promo-small {
+    display: flex;
+    gap: 10px;
+}
+
+.promo-item {
+    background: white;
+    padding: 10px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    flex: 1;
+    margin-top: 20px;
+}
+
+.promo-item img {
+    width: 100%;
+    height: 150px;
+    border-radius: 8px;
+}
+
+.promo-item h5 {
+    font-size: 14px;
+    margin-top: 8px;
+    color: #333;
+}
+/* CSS hiện tại của bạn */
+
+/* Tablet */
+@media (max-width: 1024px) {
+    .full {
+        flex-direction: column;
+        margin-left: 50px;
+        margin-right: 50px;
+    }
+
+    .trai, .phai {
+        width: 100%;
+    }
+
+    .news-item {
+        flex-direction: column;
+    }
+
+    .news-item img {
+        width: 100%;
+        height: auto;
+        margin-right: 0;
+        margin-bottom: 15px;
+    }
+
+    .banner img {
+        height: auto;
+    }
+
+    .promo-small {
+        flex-direction: column;
+    }
+
+    .promo-item {
+        margin-top: 10px;
+    }
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+    .full {
+        margin-left: 20px;
+        margin-right: 20px;
+    }
+
+    .news-section {
+        width: 100%;
+    }
+
+    .news-item {
+        padding: 10px;
+    }
+
+    .news-content h2 {
+        font-size: 16px;
+    }
+
+    .news-content p {
+        font-size: 12px;
+    }
+
+    .date {
+        font-size: 10px;
+    }
+
+    .banner img {
+        height: auto;
+    }
+
+    .promo-large h4 {
+        font-size: 14px;
+    }
+
+    .promo-item h5 {
+        font-size: 12px;
+    }
+
+    .section-title {
+        font-size: 16px;
+    }
+
+    .news-list li {
+        font-size: 12px;
+    }
+
+    .news-list li span i {
+        width: 25px;
+        height: 25px;
+        font-size: 12px;
+    }
+}
+/* css gio hang */
+

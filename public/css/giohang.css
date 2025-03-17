@@ -1,0 +1,29 @@
+.cart-item-image {
+    width: 120px;
+    height: 120px;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+.quantity-input {
+    width: 60px;
+    text-align: center;
+}
+
+.cart-summary-card {
+    background: #f8f9fa;
+    border-radius: 10px;
+    padding: 1.5rem;
+}
+
+@media (max-width: 768px) {
+    .cart-item-image {
+        width: 100%;
+        height: auto;
+        margin-bottom: 1rem;
+    }
+
+    .quantity-control {
+        justify-content: flex-start !important;
+    }
+}
