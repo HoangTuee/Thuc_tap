@@ -17,9 +17,6 @@
         <label for="anhsanpham">Ảnh sản phẩm:</label>
         <input type="file" name="anhsanpham">
 
-        <label for="giabandau">Giá ban đầu:</label>
-        <input type="number" name="giabandau" value="{{ $sanpham->giabandau }}" required>
-
         <label for="giakhuyenmai">Giá khuyến mãi:</label>
         <input type="number" name="giakhuyenmai" value="{{ $sanpham->giakhuyenmai }}" required>
 
@@ -28,9 +25,9 @@
 
         <label for="danhmuc">Danh mục:</label>
         <select name="danhmuc" id="danhmuc" required>
-            <option value="HỌC TẬP - VĂN PHÒNG" {{ $sanpham->danhmuc == 'HỌC TẬP - VĂN PHÒNG' ? 'selected' : '' }}>Học tập - Văn phòng</option>
-            <option value="GAMING - ĐỒ HỌA" {{ $sanpham->danhmuc == 'GAMING - ĐỒ HỌA' ? 'selected' : '' }}>Gaming - Đồ họa</option>
-            <option value="LAPTOP MACBOOK" {{ $sanpham->danhmuc == 'LAPTOP MACBOOK' ? 'selected' : '' }}>Laptop MacBook</option>
+            <option value="Văn Phòng - Học Tập" {{ $sanpham->danhmuc == 'Văn Phòng - Học Tập' ? 'selected' : '' }}>Văn Phòng - Học Tập</option>
+            <option value="Gaming - Đồ Họa" {{ $sanpham->danhmuc == 'Gaming - Đồ Họa' ? 'selected' : '' }}>Gaming - Đồ họa</option>
+            <option value="Linh Kiện - Phụ Kiện" {{ $sanpham->danhmuc == 'Linh Kiện - Phụ Kiện' ? 'selected' : '' }}>Linh Kiện - Phụ Kiện</option>
         </select>
 
         <label for="hangsanpham">Hãng sản phẩm:</label>

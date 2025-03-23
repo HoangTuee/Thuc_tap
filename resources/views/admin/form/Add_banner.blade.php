@@ -8,7 +8,7 @@
 
         <div class="card">
             <div class="card-body">
-                <form action="{{ route('banners.store') }}" method="POST" enctype="multipart/form-data">
+                <form action="{{ route('add_banner') }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="form-group">
                         <label for="anh_banner">Chọn ảnh banner:</label>

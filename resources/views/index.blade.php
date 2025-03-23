@@ -68,7 +68,7 @@
                 @foreach ($hocTapVanPhong as $sanpham)
                 <div class="product">
                     <div class="discount">-{{ $sanpham->giakhuyenmai }}%</div>
-                    <a href=""><img src="{{ asset($sanpham->anhsanpham) }}" alt="Laptop Lenovo Thinkbook" /></a>
+                    <a href="{{ route('chitiet',['tensanpham' => $sanpham->tensanpham]) }}"><img src="{{ asset($sanpham->anhsanpham) }}" alt="{{ asset($sanpham->tensanpham) }}" /></a>
                     <p class="title">
                         {{ $sanpham->tensanpham }} ({{ $sanpham->thongso_sanpham }})
                     </p>
@@ -76,7 +76,7 @@
                         {{ $sanpham->tensanpham }}
                     </p>
                     <p class="price">
-                        {{ number_format($sanpham->giasanpham, 0, ',', '.') }} <span class="old-price">{{ number_format($sanpham->giabandau, 0, ',', '.') }}</span>
+                        {{ number_format(($sanpham->giasanpham)-($sanpham->giasanpham)*($sanpham->giakhuyenmai)/100, 0, ',', '.') }} <span class="old-price">{{ number_format($sanpham->giasanpham, 0, ',', '.') }}</span>
                     </p>
                 </div>
                 @endforeach
@@ -105,7 +105,7 @@
                 @foreach ($gamingDoHoa as $sanpham)
                 <div class="product">
                     <div class="discount">-{{ $sanpham->giakhuyenmai }}%</div>
-                    <a href=""><img src="{{ asset($sanpham->anhsanpham) }}" alt="Laptop Lenovo Thinkbook" /></a>
+                    <a href="{{ route('chitiet',['tensanpham' => $sanpham->tensanpham]) }}"><img src="{{ asset($sanpham->anhsanpham) }}" alt="{{ $sanpham->tensanpham }}" /></a>
                     <p class="title">
                         {{ $sanpham->tensanpham }} ({{ $sanpham->thongso_sanpham }})
                     </p>
@@ -113,7 +113,7 @@
                         {{ $sanpham->tensanpham }}
                     </p>
                     <p class="price">
-                        {{ number_format($sanpham->giasanpham, 0, ',', '.') }} <span class="old-price">{{ number_format($sanpham->giabandau, 0, ',', '.') }}</span>
+                        {{ number_format(($sanpham->giasanpham)-($sanpham->giasanpham)*($sanpham->giakhuyenmai)/100, 0, ',', '.') }} <span class="old-price">{{ number_format($sanpham->giasanpham, 0, ',', '.') }}</span>
                     </p>
                 </div>
                 @endforeach
@@ -139,10 +139,10 @@
             </div>
 
             <div class="product-container">
-                @foreach ($MacBook as $sanpham)
+                @foreach ($linhKien as $sanpham)
                 <div class="product">
                     <div class="discount">-{{ $sanpham->giakhuyenmai }}%</div>
-                    <a href=""><img src="{{ asset($sanpham->anhsanpham) }}" alt="Laptop Lenovo Thinkbook" /></a>
+                    <a href="{{ route('chitiet',['tensanpham' => $sanpham->tensanpham]) }}"><img src="{{ asset($sanpham->anhsanpham) }}" alt="{{ $sanpham->tensanpham }}" /></a>
                     <p class="title">
                         {{ $sanpham->tensanpham }} ({{ $sanpham->thongso_sanpham }})
                     </p>
@@ -150,12 +150,12 @@
                         {{ $sanpham->tensanpham }}
                     </p>
                     <p class="price">
-                        {{ number_format($sanpham->giasanpham, 0, ',', '.') }} <span class="old-price">{{ number_format($sanpham->giabandau, 0, ',', '.') }}</span>
+                        {{ number_format(($sanpham->giasanpham)-($sanpham->giasanpham)*($sanpham->giakhuyenmai)/100, 0, ',', '.') }} <span class="old-price">{{ number_format($sanpham->giasanpham, 0, ',', '.') }}</span>
                     </p>
                 </div>
                 @endforeach
                 <div class="pagination">
-                    {{ $MacBook->links() }}
+                    {{ $linhKien->links() }}
                 </div>
             </div>
         </section>

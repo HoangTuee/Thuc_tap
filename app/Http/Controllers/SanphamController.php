@@ -18,7 +18,6 @@ class SanphamController extends Controller
             'tensanpham' => 'required|string|max:100|unique:sanpham,tensanpham',
             'giasanpham' => 'required|integer|min:0',
             'anhsanpham' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'giabandau' => 'required|integer|min:0',
             'giakhuyenmai' => 'required|integer|min:0',
             'thongso_sanpham' => 'required|string|max:100',
             'danhmuc' => 'required|string|max:100',
@@ -31,7 +30,6 @@ class SanphamController extends Controller
         $sanpham->tensanpham = $request->tensanpham;
         $sanpham->giasanpham = $request->giasanpham;
         $sanpham->anhsanpham = 'storage/sanpham/' . $imgName;
-        $sanpham->giabandau = $request->giabandau;
         $sanpham->giakhuyenmai = $request->giakhuyenmai;
         $sanpham->thongso_sanpham = $request->thongso_sanpham;
         $sanpham->danhmuc = $request->danhmuc;
@@ -53,7 +51,6 @@ class SanphamController extends Controller
             'tensanpham' => 'required|string|max:100|unique:sanpham,tensanpham,' . $id . ',id_sanpham',
             'giasanpham' => 'required|integer|min:0',
             'anhsanpham' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'giabandau' => 'required|integer|min:0',
             'giakhuyenmai' => 'required|integer|min:0',
             'thongso_sanpham' => 'required|string|max:100',
             'danhmuc' => 'required|string|max:100',
@@ -63,7 +60,6 @@ class SanphamController extends Controller
         $sanpham = SanPham::findOrFail($id);
         $sanpham->tensanpham = $request->tensanpham;
         $sanpham->giasanpham = $request->giasanpham;
-        $sanpham->giabandau = $request->giabandau;
         $sanpham->giakhuyenmai = $request->giakhuyenmai;
         $sanpham->thongso_sanpham = $request->thongso_sanpham;
         $sanpham->danhmuc = $request->danhmuc;

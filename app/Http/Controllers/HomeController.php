@@ -12,10 +12,10 @@ class HomeController extends Controller
     {
         // $sanphams = sanpham::all();
         // $sanphams = sanpham::paginate(4);
-        $hocTapVanPhong = sanpham::where('danhmuc', 'HỌC TẬP - VĂN PHÒNG')->paginate(4);
-        $gamingDoHoa = sanpham::where('danhmuc', 'GAMING - ĐỒ HỌA')->paginate(4);
-        $MacBook = sanpham::where('danhmuc', 'LAPTOP MACBOOK')->paginate(4);
+        $hocTapVanPhong = sanpham::where('danhmuc', 'Văn Phòng - Học Tập')->paginate(4);
+        $gamingDoHoa = sanpham::where('danhmuc', 'Gaming - Đồ Họa')->paginate(4);
+        $linhKien = sanpham::where('danhmuc', 'Link Kiện - Phụ Kiện')->paginate(4);
         $banners = banner::all();
-        return view('index', compact('hocTapVanPhong', 'gamingDoHoa', 'MacBook', 'banners'));
+        return view('index', compact('hocTapVanPhong', 'gamingDoHoa', 'linhKien', 'banners'));
     }
 }

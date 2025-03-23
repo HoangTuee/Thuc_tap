@@ -32,7 +32,7 @@
                         <td>{{ $user->password_plaintext }}</td>
                         <td>{{ $user->phanquyen }}</td>
                         <td>
-                            <button class="btn btn-success"><a href="{{ route('view_edit_user', $user->id_user) }}">Sửa</a></button>
+                            <a href="{{ route('view_edit_user', $user->id_user) }}"class="btn btn-success">Sửa</a>
                             <form action="{{ route('delete_user', $user->id_user) }}" method="POST" style="display:inline-block;">
                                 @csrf
                                 @method('DELETE')

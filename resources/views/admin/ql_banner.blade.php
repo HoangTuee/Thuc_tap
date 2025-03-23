@@ -5,7 +5,7 @@
         <div class="content-header">
             <h2 class="content-title">Quản lý banner</h2>
             <div>
-                <button class="btn btn-primary"><a href="{{ route('addbanner') }}">Thêm mới</a></button>
+                <button class="btn btn-primary"><a href="{{ route('view_add_banner') }}">Thêm mới</a></button>
                 <input type="text" class="search-box" placeholder="Tìm kiếm khách hàng...">
             </div>
         </div>
@@ -32,7 +32,7 @@
                             <img src="{{ asset($banner->anh_banner) }}" width="150" alt="Banner">
                         </td>
                         <td>
-                            <button class="btn btn-success"><a href="{{ route('view_edit_banner', $banner->id_banner) }}">Sửa</a></button>
+                            <a href="{{ route('view_edit_banner', $banner->id_banner) }}"class="btn btn-success">Sửa</a>
                             <form action="{{ route('delete_banner', $banner->id_banner) }}" method="POST" style="display:inline-block;" enctype="multipart/form-data">
                                 @csrf
                                 @method('DELETE')

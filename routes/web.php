@@ -5,7 +5,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\BannerController;
-use App\Http\Controllers\KhuyenmaiController;
+use App\Http\Controllers\ChitietsanphamController;
 use App\Http\Controllers\SanphamController;
 use App\Http\Controllers\UserController;
 use App\Models\User;
@@ -32,15 +32,20 @@ Route::get('/login', function () {
 Route::post('/login', [LoginController::class, 'login'])->name('login');
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
+Route::get('/signup',[LoginController::class, 'signup'])->name('signup');
+Route::post('/add_signup',[LoginController::class, 'add_signup'])->name('addsignup');
+
 //User
 Route::get('/tintuc', [UserController::class, 'tintuc'])->name('tintuc');
 Route::get('/laptopnew', [UserController::class, 'laptopnew'])->name('laptopnew');
 Route::get('/khuyenmai',[UserController::class, 'khuyenmai'])->name('khuyenmai');
 Route::get('/giohang',[UserController::class, 'giohang'])->name('giohang');
+//Chi tiet san pham
+Route::get('/chitietsanpham/{tensanpham}',[ChitietsanphamController::class, 'chitiet'])->name('chitiet');
 
 //Admin
 Route::middleware(['admin'])->group(function () {
-    Route::get('/admin', [BannerController::class, 'qlbanner'])->name('admin');
+    Route::get('/admin', [AdminController::class, 'index'])->name('admin');
 
     //ql san pham
     Route::get('admin/sanpham', [SanphamController::class, 'sanpham'])->name('sanpham');
@@ -60,10 +65,27 @@ Route::middleware(['admin'])->group(function () {
 
     //ql banner
     Route::get('admin/qlbanner', [BannerController::class, 'qlbanner'])->name('qlbanner');
-    Route::get('admin/addbanner', [BannerController::class, 'view_add_banner'])->name('addbanner');
-    Route::post('admin/banners', [BannerController::class, 'add_banner'])->name('banners.store');
-    Route::get('admin/{id}/edit_banner',[BannerController::class, 'view_edit_banner'])->name('view_edit_banner');
+    Route::get('admin/view_add_banner', [BannerController::class, 'view_add_banner'])->name('view_add_banner');
+    Route::post('admin/add_banner', [BannerController::class, 'add_banner'])->name('add_banner');
+    Route::get('admin/{id}/view_edit_banner',[BannerController::class, 'view_edit_banner'])->name('view_edit_banner');
     Route::put('admin/{banner}/edit_banner',[BannerController::class, 'edit_banner'])->name('edit_banner');
     Route::delete('admin/{id}',[BannerController::class, 'delete_banner'])->name('delete_banner');
+
+    //ql chi tiet
+    Route::get('admin/qlchitiet',[ChitietsanphamController::class, 'qlchitiet'])->name('qlchitiet');
+    Route::get('admin/view_add_chitiet',[ChitietsanphamController::class, 'view_add_chitiet'])->name('view_add_chitiet');
+    Route::post('admin/add_chitiet',[ChitietsanphamController::class,'add_chitiet'])->name('add_chitiet');
+    Route::get('admin/{id_chitiet}/view_edit_chitiet',[ChitietsanphamController::class, 'view_edit_chitiet'])->name('view_edit_chitiet');
+    Route::put('admin/{tensanpham}/edit_chitiet',[ChitietsanphamController::class, 'edit_chitiet'])->name('edit_chitiet');
+    Route::delete('admin/{id_chitiet}/delete_chitiet',[ChitietsanphamController::class, 'delete_chitiet'])->name('delete_chitiet');
+
+    //ql chi tiet tung san pham
+    Route::get('admin/{tensanpham}/qlchitietsanpham',[ChitietsanphamController::class, 'qlchitietsanpham'])->name('qlchitietsanpham');
+    // Route::get('admin/view_add_chitiet',[ChitietsanphamController::class, 'view_add_chitietsanpham'])->name('view_add_chitietsanpham');
+    // Route::post('admin/add_chitiet',[ChitietsanphamController::class,'add_chitietsanpham'])->name('add_chitietsanpham');
+    // Route::get('admin/{tensanpham}/view_edit_chitiet',[ChitietsanphamController::class, 'view_edit_chitietsanpham'])->name('view_edit_chitietsanpham');
+    // Route::put('admin/{tensanpham}/edit_chitiet',[ChitietsanphamController::class, 'edit_chitietsanpham'])->name('edit_chitietsanpham');
+    // Route::delete('admin/{tensanpham}/delete_chitiet',[ChitietsanphamController::class, 'delete_chitietsanpham'])->name('delete_chitetsanpham');
+
 
 });

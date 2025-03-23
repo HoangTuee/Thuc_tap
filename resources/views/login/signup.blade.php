@@ -23,7 +23,7 @@
 	<div class="d-flex justify-content-center h-100">
 		<div class="card">
 			<div class="card-header">
-				<h3>Đăng Nhập</h3>
+				<h3>Đăng Ký</h3>
 				<div class="d-flex justify-content-end social_icon">
 					<a href=""><span><i class="fab fa-facebook-square"></i></span></a>
 					<a href=""><span><i class="fab fa-google-plus-square"></i></span></a>
@@ -31,12 +31,7 @@
 				</div>
 			</div>
 			<div class="card-body">
-                @if ($errors->has('login_error'))
-                    <div class="alert alert-danger">
-                        {{ $errors->first('login_error') }}
-                    </div>
-                @endif
-                <form method="POST" action="{{ route('login') }}">
+                <form method="POST" action="{{ route('addsignup') }}">
                     @csrf
                     <div class="input-group form-group">
                         <div class="input-group-prepend">
@@ -50,9 +45,6 @@
                         </div>
                         <input type="password" class="form-control" name="password" placeholder="Password" required>
                     </div>
-                    <div class="row align-items-center remember">
-                        <input type="checkbox" name="remember"> Nhớ mật khẩu
-                    </div>
                     <div class="form-group">
                         <input type="submit" value="Login" class="btn float-right login_btn">
                     </div>
@@ -60,7 +52,7 @@
             </div>
 			<div class="card-footer">
 				<div class="d-flex justify-content-center links">
-					Bạn chưa có tài khoản?<a href="{{ route('signup') }}">Đăng ký</a>
+					Bạn đã có tài khoản?<a href="{{ route('login') }}">Đăng nhập</a>
 				</div>
 				<div class="d-flex justify-content-center">
 					<a href="#">Quên tài khoản hoặc mật khẩu?</a>

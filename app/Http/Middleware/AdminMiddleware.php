@@ -16,7 +16,13 @@ class AdminMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (Auth::check() && Auth::user()->phanquyen == 'admin' || Auth::user()->phanquyen == 'banhang') {
+        if (!Auth::check()) {
+            return redirect('/login')->withErrors(['unauthorized' => 'Vui lòng đăng nhập trước!']);
+        }
+
+        $user = Auth::user();
+
+        if ($user->phanquyen == 'admin' || $user->phanquyen == 'banhang') {
             return $next($request);
         }
         return redirect('/login')->withErrors(['unauthorized' => 'Bạn không có quyền truy cập!']);

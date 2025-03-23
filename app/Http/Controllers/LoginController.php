@@ -40,4 +40,23 @@ class LoginController extends Controller
         session()->forget('phanquyen');
         return redirect('/login');
     }
+
+    public function signup(){
+        return view('login.signup');
+    }
+
+    public function add_signup(Request $request){
+        $request->validate([
+            'username'  => 'required|max:100',
+            'password'  => 'required|max:100',
+            'phanquyen' => '',
+        ]);
+        $user = new User();
+        $user->username         = $request->username;
+        $user->password         = bcrypt($request->password); // Mật khẩu mã hóa
+        $user->password_plaintext = $request->password;       // Mật khẩu plaintext
+        $user->phanquyen        = $request->phanquyen ?: '0';
+        $user->save();
+        return redirect()->route('login')->with('success', 'Đăng nhập thành công!');
+    }
 }
