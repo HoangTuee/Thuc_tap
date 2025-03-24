@@ -23,7 +23,8 @@ class SanphamController extends Controller
             'danhmuc' => 'required|string|max:100',
             'hangsanpham' => 'required|string|max:100',
         ]);
-        $imgName = time() . '.' . $request->anhsanpham->extension();
+        $imgName = $request->file("anhsanpham");
+        $imgName = $imgName->getClientOriginalName();
         $request->anhsanpham->move(public_path('storage/sanpham'), $imgName);
 
         $sanpham = new SanPham();
@@ -66,7 +67,8 @@ class SanphamController extends Controller
         $sanpham->hangsanpham = $request->hangsanpham;
 
         if ($request->hasFile('anhsanpham')) {
-            $imgName = time() . '.' . $request->anhsanpham->extension();
+            $imgName = $request->file("anhsanpham");
+            $imgName = $imgName->getClientOriginalName();
             $request->anhsanpham->move(public_path('storage/sanpham'), $imgName);
             $sanpham->anhsanpham = 'storage/sanpham/' . $imgName;
         }

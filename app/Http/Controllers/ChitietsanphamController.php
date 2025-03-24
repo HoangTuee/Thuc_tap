@@ -22,8 +22,8 @@ class ChitietsanphamController extends Controller
         return view('user.chitietsanpham', compact('sanpham', 'chitiet'));
     }
 
-    public function view_add_chitiet(){
-        return view('admin.form.Add_chitietsanpham');
+    public function view_add_chitiet($tensanpham){
+        return view('admin.form.Add_chitietsanpham',compact('tensanpham'));
     }
 
     public function add_chitiet(Request $request){
@@ -36,16 +36,16 @@ class ChitietsanphamController extends Controller
             'anhchitiet3' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
             'anhchitiet4' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
-        $image1 = time() . '_1.' . $request->anhchitiet1->extension();
+        $image1 = $request->file("anhchitiet1")->getClientOriginalName();
         $request->anhchitiet1->move(public_path('storage/chitietsanpham'), $image1);
 
-        $image2 = $request->anhchitiet2 ? time() . '_2.' . $request->anhchitiet2->extension() : null;
+        $image2 = $request->file("anhchitiet2")->getClientOriginalName();
         if ($image2) $request->anhchitiet2->move(public_path('storage/chitietsanpham'), $image2);
 
-        $image3 = $request->anhchitiet3 ? time() . '_3.' . $request->anhchitiet3->extension() : null;
+        $image3 = $request->file("anhchitiet3")->getClientOriginalName();
         if ($image3) $request->anhchitiet3->move(public_path('storage/chitietsanpham'), $image3);
 
-        $image4 = $request->anhchitiet4 ? time() . '_4.' . $request->anhchitiet4->extension() : null;
+        $image4 = $request->file("anhchitiet4")->getClientOriginalName();
         if ($image4) $request->anhchitiet4->move(public_path('storage/chitietsanpham'), $image4);
         ChiTietSanPham::create([
             'tensanpham' => $request->tensanpham,
@@ -79,25 +79,25 @@ class ChitietsanphamController extends Controller
         $chitiet->cauhinh_sanpham = $request->cauhinh_sanpham;
         $chitiet->tinhtrang_sanpham = $request->tinhtrang_sanpham;
         if ($request->hasFile('anhchitiet1')) {
-            $image1 = time() . '_1.' . $request->anhchitiet1->extension();
+            $image1 = $request->file("anhchitiet1")->getClientOriginalName();
             $request->anhchitiet1->move(public_path('storage/chitietsanpham'), $image1);
             $chitiet->anhchitiet1 = 'storage/chitietsanpham/' . $image1;
         }
 
         if ($request->hasFile('anhchitiet2')) {
-            $image2 = time() . '_2.' . $request->anhchitiet2->extension();
+            $image2 = $request->file("anhchitiet2")->getClientOriginalName();
             $request->anhchitiet2->move(public_path('storage/chitietsanpham'), $image2);
             $chitiet->anhchitiet2 = 'storage/chitietsanpham/' . $image2;
         }
 
         if ($request->hasFile('anhchitiet3')) {
-            $image3 = time() . '_3.' . $request->anhchitiet3->extension();
+            $image3 = $request->file("anhchitiet3")->getClientOriginalName();
             $request->anhchitiet3->move(public_path('storage/chitietsanpham'), $image3);
             $chitiet->anhchitiet3 = 'storage/chitietsanpham/' . $image3;
         }
 
         if ($request->hasFile('anhchitiet4')) {
-            $image4 = time() . '_4.' . $request->anhchitiet4->extension();
+            $image4 = $request->file("anhchitiet4")->getClientOriginalName();
             $request->anhchitiet4->move(public_path('storage/chitietsanpham'), $image4);
             $chitiet->anhchitiet4 = 'storage/chitietsanpham/' . $image4;
         }
@@ -115,7 +115,10 @@ class ChitietsanphamController extends Controller
     //quan ly chi tiet tung san pham
 
     public function qlchitietsanpham(Request $request, $tensanpham){
-        $chitiet = chitietsanpham::where('tensanpham',$tensanpham)->firstOrFail();
+        $chitiet = chitietsanpham::where('tensanpham',$tensanpham)->first();
+        if(!$chitiet){
+            return redirect()->route('view_add_chitiet',['tensanpham' => $tensanpham]);
+        }
         $sanpham = sanpham::where('tensanpham',$tensanpham)->firstOrFail();
         return view('admin.ql_chitietsanpham',compact('chitiet', 'sanpham'));
     }

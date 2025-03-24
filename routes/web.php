@@ -73,7 +73,7 @@ Route::middleware(['admin'])->group(function () {
 
     //ql chi tiet
     Route::get('admin/qlchitiet',[ChitietsanphamController::class, 'qlchitiet'])->name('qlchitiet');
-    Route::get('admin/view_add_chitiet',[ChitietsanphamController::class, 'view_add_chitiet'])->name('view_add_chitiet');
+    Route::get('admin/{tensanpham}/view_add_chitiet',[ChitietsanphamController::class, 'view_add_chitiet'])->name('view_add_chitiet');
     Route::post('admin/add_chitiet',[ChitietsanphamController::class,'add_chitiet'])->name('add_chitiet');
     Route::get('admin/{id_chitiet}/view_edit_chitiet',[ChitietsanphamController::class, 'view_edit_chitiet'])->name('view_edit_chitiet');
     Route::put('admin/{tensanpham}/edit_chitiet',[ChitietsanphamController::class, 'edit_chitiet'])->name('edit_chitiet');

@@ -7,7 +7,7 @@
         @csrf
         <div class="mb-3">
             <label for="tensanpham" class="form-label">Tên Sản Phẩm</label>
-            <input type="text" class="form-control" id="tensanpham" name="tensanpham" required>
+            <input type="text" class="form-control" id="tensanpham" value="{{ $tensanpham }}" name="tensanpham" required>
         </div>
         <div class="mb-3">
             <label for="cauhinh_sanpham" class="form-label">Cấu Hình</label>

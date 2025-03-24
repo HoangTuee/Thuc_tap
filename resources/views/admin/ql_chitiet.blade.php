@@ -5,7 +5,6 @@
         <div class="content-header">
             <h2 class="content-title">Quản lý chi tiết</h2>
             <div>
-                <a href="{{ route('view_add_chitiet') }}" class="btn btn-primary">Thêm mới</a>
                 <input type="text" class="search-box" placeholder="Tìm kiếm sản phẩm...">
             </div>
         </div>
