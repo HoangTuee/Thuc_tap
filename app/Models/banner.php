@@ -11,5 +11,5 @@ class banner extends Model
     protected $table = 'banner'; // Chỉ định rõ tên bảng
     protected $primaryKey = 'id_banner';
     public $timestamps = false;
-    protected $fillable = ['anh_banner'];
+    protected $fillable = ['anh_banner','tensanpham'];
 }

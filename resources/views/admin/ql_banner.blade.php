@@ -20,6 +20,7 @@
             <thead>
                 <tr>
                     <th>Id</th>
+                    <th>Tên sản phẩm</th>
                     <th>Banner</th>
                     <th>Hành động</th>
                 </tr>
@@ -28,6 +29,7 @@
                 @foreach ($banners as $banner)
                     <tr>
                         <td>{{ $banner->id_banner }}</td>
+                        <td>{{ $banner->tensanpham }}</td>
                         <td>
                             <img src="{{ asset($banner->anh_banner) }}" width="150" alt="Banner">
                         </td>

@@ -18,10 +18,10 @@
         <input type="file" name="anhsanpham">
 
         <label for="giakhuyenmai">Giá khuyến mãi:</label>
-        <input type="number" name="giakhuyenmai" value="{{ $sanpham->giakhuyenmai }}" required>
+        <input type="number" name="giakhuyenmai" value="{{ $sanpham->giakhuyenmai }}">
 
         <label for="thongso_sanpham">Thông số:</label>
-        <input type="text" name="thongso_sanpham" value="{{ $sanpham->thongso_sanpham }}" required>
+        <input type="text" name="thongso_sanpham" value="{{ $sanpham->thongso_sanpham }}">
 
         <label for="danhmuc">Danh mục:</label>
         <select name="danhmuc" id="danhmuc" required>

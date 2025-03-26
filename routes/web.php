@@ -6,6 +6,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\BannerController;
 use App\Http\Controllers\ChitietsanphamController;
+use App\Http\Controllers\GiohangController;
 use App\Http\Controllers\SanphamController;
 use App\Http\Controllers\UserController;
 use App\Models\User;
@@ -39,9 +40,14 @@ Route::post('/add_signup',[LoginController::class, 'add_signup'])->name('addsign
 Route::get('/tintuc', [UserController::class, 'tintuc'])->name('tintuc');
 Route::get('/laptopnew', [UserController::class, 'laptopnew'])->name('laptopnew');
 Route::get('/khuyenmai',[UserController::class, 'khuyenmai'])->name('khuyenmai');
-Route::get('/giohang',[UserController::class, 'giohang'])->name('giohang');
+
 //Chi tiet san pham
 Route::get('/chitietsanpham/{tensanpham}',[ChitietsanphamController::class, 'chitiet'])->name('chitiet');
+
+//gio hang
+Route::get('/giohang',[GiohangController::class, 'giohang'])->name('giohang');
+Route::post('/add_giohang',[GiohangController::class, 'add_giohang'])->name('addgiohang');
+Route::post('/delete_giohang/{id}',[GiohangController::class, 'delete_giohang'])->name('deletegiohang');
 
 //Admin
 Route::middleware(['admin'])->group(function () {

@@ -1,7 +1,16 @@
 @extends('master')
 @section('main')
 
-    <form action="" method="POST" enctype="multipart/form-data">
+    <style>
+        .giohang {
+            text-decoration: none;
+            color: rgb(0, 0, 0);
+            border : 1px solid black;
+            background-color: rgb(241, 233, 233);
+            padding: 2px 5px;
+        }
+    </style>
+    <form action="{{ route('addgiohang') }}" method="POST" enctype="multipart/form-data">
         @csrf
         <div class="product-container" style="margin-top: 3%">
             <div class="image-gallery">
@@ -23,7 +32,8 @@
                 <h1 class="product-title">{{ $sanpham->tensanpham }}</h1>
                 <p class="product-price">
                     {{ number_format($sanpham->giasanpham - ($sanpham->giasanpham * $sanpham->giakhuyenmai) / 100, 0, ',', '.') }}₫
-                    <span class="old-price">{{ number_format($sanpham->giasanpham, 0, ',', '.') }}₫</span></p>
+                    <span class="old-price">{{ number_format($sanpham->giasanpham, 0, ',', '.') }}₫</span>
+                </p>
                 <p class="product-status">Tình trạng: <span class="status">{{ $chitiet->tinhtrang_sanpham }}</span></p>
 
                 <h3>Cấu hình:</h3>
@@ -40,7 +50,17 @@
                     </ul>
                 </div>
 
-                <button class="buy-now"><i class="fa-solid fa-cart-shopping"></i> Thêm vào giỏ hàng</button>
+                <input type="hidden" name="tensanpham" value="{{ $sanpham->tensanpham }}">
+                <input type="hidden" name="giasanpham" value="{{ $sanpham->giasanpham }}">
+                <input type="hidden" name="anhsanpham" value="{{ $sanpham->anhsanpham }}">
+
+                @if (auth()->check())
+                    <button class="buy-now"><i class="fa-solid fa-cart-shopping"></i> Thêm vào giỏ hàng</button>
+                @else
+                    <a href="{{ route('login') }}" onclick="alert('Đăng nhập để thêm vào giỏ hàng')" class="giohang">
+                        <i class="fa-solid fa-cart-shopping"></i> Thêm vào giỏ hàng
+                    </a>
+                @endif
             </div>
         </div>
     </form>

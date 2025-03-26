@@ -25,12 +25,12 @@
 
             <div class="mb-3">
                 <label for="giakhuyenmai" class="form-label">Giá khuyến mãi:</label>
-                <input type="number" class="form-control" name="giakhuyenmai" required>
+                <input type="number" class="form-control" name="giakhuyenmai">
             </div>
 
             <div class="mb-3">
                 <label for="thongso_sanpham" class="form-label">Thông số:</label>
-                <input type="text" class="form-control" name="thongso_sanpham" required>
+                <input type="text" class="form-control" name="thongso_sanpham">
             </div>
 
             <div class="mb-3">

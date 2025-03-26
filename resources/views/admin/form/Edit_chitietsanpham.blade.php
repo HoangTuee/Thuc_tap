@@ -17,7 +17,7 @@
 
         <div class="col-md-6">
             <label class="form-label">Cấu hình:</label>
-            <input type="text" name="cauhinh_sanpham" value="{{ $chitiet->cauhinh_sanpham }}" class="form-control" required>
+            <input type="text" name="cauhinh_sanpham" value="{{ $chitiet->cauhinh_sanpham }}" class="form-control">
         </div>
 
         <div class="col-md-6">

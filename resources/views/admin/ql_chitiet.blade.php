@@ -12,7 +12,6 @@
         <table>
             <thead>
                 <tr>
-                    <th>Id</th>
                     <th>Tên sản phẩm</th>
                     <th>Cấu hình sản phẩm</th>
                     <th>Tình trạng</th>
@@ -26,7 +25,6 @@
             <tbody>
                 @foreach ($chitiets as $chitiet)
                     <tr>
-                        <td>{{ $chitiet->id_chitiet }}</td>
                         <td>{{ $chitiet->tensanpham }}</td>
                         <td>{{ $chitiet->cauhinh_sanpham }}</td>
                         <td>{{ $chitiet->tinhtrang_sanpham }}</td>

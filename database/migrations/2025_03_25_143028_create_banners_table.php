@@ -14,6 +14,8 @@ return new class extends Migration
         Schema::create('banner', function (Blueprint $table) {
             $table->id('id_banner');
             $table->string('anh_banner', 100);
+            $table->string('tensanpham',100)->unique();
+            $table->foreign('tensanpham')->references('tensanpham')->on('sanpham')->onDelete('cascade');
         });
     }
 

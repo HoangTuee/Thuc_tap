@@ -11,7 +11,7 @@
         </div>
         <div class="mb-3">
             <label for="cauhinh_sanpham" class="form-label">Cấu Hình</label>
-            <input type="text" class="form-control" id="cauhinh_sanpham" name="cauhinh_sanpham" required>
+            <input type="text" class="form-control" id="cauhinh_sanpham" name="cauhinh_sanpham">
         </div>
         <div class="mb-3">
             <label for="tinhtrang_sanpham" class="form-label">Tình Trạng</label>

@@ -16,7 +16,6 @@ return new class extends Migration
             $table->string('tensanpham', 100)->unique();//unique ten duy nhat
             $table->integer('giasanpham');
             $table->string('anhsanpham', 100);
-            $table->integer('giabandau');
             $table->integer('giakhuyenmai');
             $table->string('thongso_sanpham', 100);
             $table->string('danhmuc', 100);

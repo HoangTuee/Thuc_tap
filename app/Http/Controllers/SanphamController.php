@@ -18,8 +18,8 @@ class SanphamController extends Controller
             'tensanpham' => 'required|string|max:100|unique:sanpham,tensanpham',
             'giasanpham' => 'required|integer|min:0',
             'anhsanpham' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'giakhuyenmai' => 'required|integer|min:0',
-            'thongso_sanpham' => 'required|string|max:100',
+            'giakhuyenmai' => 'nullable|integer|min:0',
+            'thongso_sanpham' => 'nullable|string|max:100',
             'danhmuc' => 'required|string|max:100',
             'hangsanpham' => 'required|string|max:100',
         ]);
@@ -31,8 +31,8 @@ class SanphamController extends Controller
         $sanpham->tensanpham = $request->tensanpham;
         $sanpham->giasanpham = $request->giasanpham;
         $sanpham->anhsanpham = 'storage/sanpham/' . $imgName;
-        $sanpham->giakhuyenmai = $request->giakhuyenmai;
-        $sanpham->thongso_sanpham = $request->thongso_sanpham;
+        $sanpham->giakhuyenmai = $request->giakhuyenmai ?? '';
+        $sanpham->thongso_sanpham = $request->thongso_sanpham ?? '';
         $sanpham->danhmuc = $request->danhmuc;
         $sanpham->hangsanpham = $request->hangsanpham;
         $sanpham->save();
@@ -52,8 +52,8 @@ class SanphamController extends Controller
             'tensanpham' => 'required|string|max:100|unique:sanpham,tensanpham,' . $id . ',id_sanpham',
             'giasanpham' => 'required|integer|min:0',
             'anhsanpham' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'giakhuyenmai' => 'required|integer|min:0',
-            'thongso_sanpham' => 'required|string|max:100',
+            'giakhuyenmai' => 'nullable|integer|min:0',
+            'thongso_sanpham' => 'nullable|string|max:100',
             'danhmuc' => 'required|string|max:100',
             'hangsanpham' => 'required|string|max:100',
         ]);
@@ -61,8 +61,8 @@ class SanphamController extends Controller
         $sanpham = SanPham::findOrFail($id);
         $sanpham->tensanpham = $request->tensanpham;
         $sanpham->giasanpham = $request->giasanpham;
-        $sanpham->giakhuyenmai = $request->giakhuyenmai;
-        $sanpham->thongso_sanpham = $request->thongso_sanpham;
+        $sanpham->giakhuyenmai = $request->giakhuyenmai ?? '';
+        $sanpham->thongso_sanpham = $request->thongso_sanpham ?? '';
         $sanpham->danhmuc = $request->danhmuc;
         $sanpham->hangsanpham = $request->hangsanpham;
 
@@ -83,7 +83,7 @@ class SanphamController extends Controller
 
     public function sanpham()
     {
-        $sanphams = sanpham::paginate(5);
+        $sanphams = sanpham::orderBy('id_sanpham','DESC')->paginate(4);
         return view('admin/ql_sanpham', compact('sanphams'));
     }
 

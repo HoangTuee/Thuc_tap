@@ -5,70 +5,80 @@
 
 <!DOCTYPE html>
 <html>
-<head>
-	<title>Login Page</title>
-   <!--Made with love by Mutiullah Samim -->
 
-	<!--Bootsrap 4 CDN-->
-	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+<head>
+    <title>Login Page</title>
+    <!--Made with love by Mutiullah Samim -->
+
+    <!--Bootsrap 4 CDN-->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+        integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 
     <!--Fontawesome CDN-->
-	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"
+        integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
 
-	<!--Custom styles-->
-	<link rel="stylesheet" type="text/css" href="{{ asset('css/login.css') }}">
+    <!--Custom styles-->
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/login.css') }}">
 </head>
+
 <body>
-<div class="container">
-	<div class="d-flex justify-content-center h-100">
-		<div class="card">
-			<div class="card-header">
-				<h3>Đăng Nhập</h3>
-				<div class="d-flex justify-content-end social_icon">
-					<a href=""><span><i class="fab fa-facebook-square"></i></span></a>
-					<a href=""><span><i class="fab fa-google-plus-square"></i></span></a>
-					<a href=""><span><i class="fab fa-twitter-square"></i></span></a>
-				</div>
-			</div>
-			<div class="card-body">
+    <div class="container">
+        <div class="d-flex justify-content-center h-100">
+            <div class="card">
+                @if (session('login'))
+                    <div class="alert alert-success">
+                        {{ session('login') }}
+                    </div>
+                @endif
                 @if ($errors->has('login_error'))
                     <div class="alert alert-danger">
                         {{ $errors->first('login_error') }}
                     </div>
                 @endif
-                <form method="POST" action="{{ route('login') }}">
-                    @csrf
-                    <div class="input-group form-group">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text"><i class="fas fa-user"></i></span>
+                <div class="card-header">
+                    <h3>Đăng Nhập</h3>
+                    <div class="d-flex justify-content-end social_icon">
+                        <a href=""><span><i class="fab fa-facebook-square"></i></span></a>
+                        <a href=""><span><i class="fab fa-google-plus-square"></i></span></a>
+                        <a href=""><span><i class="fab fa-twitter-square"></i></span></a>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <form method="POST" action="{{ route('login') }}">
+                        @csrf
+                        <div class="input-group form-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fas fa-user"></i></span>
+                            </div>
+                            <input type="text" class="form-control" name="username" placeholder="Username" required>
                         </div>
-                        <input type="text" class="form-control" name="username" placeholder="Username" required>
-                    </div>
-                    <div class="input-group form-group">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text"><i class="fas fa-key"></i></span>
+                        <div class="input-group form-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fas fa-key"></i></span>
+                            </div>
+                            <input type="password" class="form-control" name="password" placeholder="Password" required>
                         </div>
-                        <input type="password" class="form-control" name="password" placeholder="Password" required>
+                        <div class="row align-items-center remember">
+                            <input type="checkbox" name="remember"> Nhớ mật khẩu
+                        </div>
+                        <div class="form-group">
+                            <input type="submit" value="Login" class="btn float-right login_btn">
+                        </div>
+                    </form>
+                </div>
+                <div class="card-footer">
+                    <div class="d-flex justify-content-center links">
+                        Bạn chưa có tài khoản?<a href="{{ route('signup') }}">Đăng ký</a>
                     </div>
-                    <div class="row align-items-center remember">
-                        <input type="checkbox" name="remember"> Nhớ mật khẩu
+                    <div class="d-flex justify-content-center">
+                        <a href="#">Quên tài khoản hoặc mật khẩu?</a>
                     </div>
-                    <div class="form-group">
-                        <input type="submit" value="Login" class="btn float-right login_btn">
-                    </div>
-                </form>
+                </div>
             </div>
-			<div class="card-footer">
-				<div class="d-flex justify-content-center links">
-					Bạn chưa có tài khoản?<a href="{{ route('signup') }}">Đăng ký</a>
-				</div>
-				<div class="d-flex justify-content-center">
-					<a href="#">Quên tài khoản hoặc mật khẩu?</a>
-				</div>
-			</div>
-		</div>
-	</div>
-</div>
-<script src="{{ asset('js/login.js') }}"></script>
+        </div>
+    </div>
+    <script src="{{ asset('js/login.js') }}"></script>
 </body>
+
 </html>

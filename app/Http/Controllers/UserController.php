@@ -19,8 +19,5 @@ class UserController extends Controller
     public function khuyenmai(){
         return view('user.khuyen_mai');
     }
-    public function giohang(){
-        return view('user.giohang');
-    }
 
 }

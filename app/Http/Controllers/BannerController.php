@@ -15,16 +15,18 @@ class BannerController extends Controller
     public function add_banner(Request $request)
     {
         $request->validate([
+            'tensanpham' =>'required|exists:sanpham,tensanpham',
             'anh_banner' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
         // Lưu ảnh vào thư mục public/storage/banners
-        $imageName = time() . '.' . $request->anh_banner->extension();
+        $imageName = $request->file("anh_banner")->getClientOriginalName();
         $request->anh_banner->move(public_path('storage/banners'), $imageName);
 
         // Lưu đường dẫn vào database
         $banner = new Banner();
         $banner->anh_banner = 'storage/banners/' . $imageName;
+        $banner->tensanpham = $request->tensanpham;
         $banner->save();
 
         return redirect()->route('qlbanner')->with('success', 'Ảnh đã được thêm thành công!');
@@ -38,17 +40,16 @@ class BannerController extends Controller
     public function edit_banner(Request $request, banner $banner){
         $request->validate([
             'anh_banner' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'tensanpham' =>'required|exists:sanpham,tensanpham',
         ]);
         $imageName = $request->file('anh_banner')->getClientOriginalName();
         $request->anh_banner->move(public_path('storage/banners'), $imageName);
         // Lưu đường dẫn vào database
-        $banner->update([
-            'anh_banner' => 'storage/banners/' . $imageName,
-        ]);
+        $banner->anh_banner = 'storage/banners/' . $imageName;
+        $banner->tensanpham = $request->tensanpham;
+        $banner->save();
 
-        if($banner){
-            return redirect()->route('qlbanner')->with('success', 'Ảnh đã được thay đổi thành công!');
-        }
+        return redirect()->route('qlbanner')->with('success', 'Ảnh đã được thay đổi thành công!');
     }
 
 

@@ -10,6 +10,10 @@
             <div class="card-body">
                 <form action="{{ route('add_banner') }}" method="POST" enctype="multipart/form-data">
                     @csrf
+                    <div class="mb-3">
+                        <label for="tensanpham" class="form-label">Tên sản phẩm:</label>
+                        <input type="text" class="form-control" name="tensanpham" required>
+                    </div>
                     <div class="form-group">
                         <label for="anh_banner">Chọn ảnh banner:</label>
                         <input type="file" name="anh_banner" class="form-control" id="anh_banner" required>

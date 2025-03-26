@@ -8,7 +8,7 @@
                     <div class="banner-slider">
                         <div class="slides">
                             @foreach($banners as $key => $banner)
-                                <a href="#">
+                                <a href="{{ route('chitiet',['tensanpham' => $banner->tensanpham]) }}">
                                     <div class="slide {{ $key == 0 ? 'active' : '' }}">
                                         <img src="{{ asset($banner->anh_banner) }}" alt="Slide {{ $key + 1 }}" />
                                         <div class="content"></div>
@@ -126,7 +126,7 @@
         <section class="sanpham-phanloai">
             <div class="category-bar">
                 <div class="category-title">
-                    <span>LAPTOP MacBook</span>
+                    <span>Linh Kiện - Phụ Kiện</span>
                 </div>
                 <div class="price-range">
                     <span class="label">Mức giá:</span>
