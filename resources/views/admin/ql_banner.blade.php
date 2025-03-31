@@ -19,21 +19,19 @@
         <table class="table table-bordered mt-3">
             <thead>
                 <tr>
-                    <th>Id</th>
-                    <th>Tên sản phẩm</th>
-                    <th>Banner</th>
-                    <th>Hành động</th>
+                    <th style="text-align: center">Tên sản phẩm</th>
+                    <th style="text-align: center">Banner</th>
+                    <th style="text-align: center">Hành động</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach ($banners as $banner)
                     <tr>
-                        <td>{{ $banner->id_banner }}</td>
                         <td>{{ $banner->tensanpham }}</td>
-                        <td>
+                        <td style="text-align: center">
                             <img src="{{ asset($banner->anh_banner) }}" width="150" alt="Banner">
                         </td>
-                        <td>
+                        <td style="text-align: center">
                             <a href="{{ route('view_edit_banner', $banner->id_banner) }}"class="btn btn-success">Sửa</a>
                             <form action="{{ route('delete_banner', $banner->id_banner) }}" method="POST" style="display:inline-block;" enctype="multipart/form-data">
                                 @csrf

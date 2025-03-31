@@ -47,7 +47,7 @@ Route::get('/chitietsanpham/{tensanpham}',[ChitietsanphamController::class, 'chi
 //gio hang
 Route::get('/giohang',[GiohangController::class, 'giohang'])->name('giohang');
 Route::post('/add_giohang',[GiohangController::class, 'add_giohang'])->name('addgiohang');
-Route::post('/delete_giohang/{id}',[GiohangController::class, 'delete_giohang'])->name('deletegiohang');
+Route::delete('/delete_giohang/{id}',[GiohangController::class, 'delete_giohang'])->name('deletegiohang');
 
 //Admin
 Route::middleware(['admin'])->group(function () {
@@ -95,3 +95,4 @@ Route::middleware(['admin'])->group(function () {
 
 
 });
+Route::get('search',[SanphamController::class, 'search'])->name('search');

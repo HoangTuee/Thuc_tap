@@ -26,18 +26,23 @@
     <div class="container">
         <div class="d-flex justify-content-center h-100">
             <div class="card">
-                @if (session('login'))
-                    <div class="alert alert-success">
-                        {{ session('login') }}
-                    </div>
-                @endif
-                @if ($errors->has('login_error'))
-                    <div class="alert alert-danger">
-                        {{ $errors->first('login_error') }}
-                    </div>
-                @endif
                 <div class="card-header">
                     <h3>Đăng Nhập</h3>
+                    @if (session('login'))
+                        <div class="alert alert-success">
+                            {{ session('login') }}
+                        </div>
+                    @endif
+                    @if ($errors->has('login_error'))
+                        <div class="alert alert-danger">
+                            {{ $errors->first('login_error') }}
+                        </div>
+                    @endif
+                    @if (session('success'))
+                        <div class="alert alert-success">
+                            {{ session('success') }}
+                        </div>
+                    @endif
                     <div class="d-flex justify-content-end social_icon">
                         <a href=""><span><i class="fab fa-facebook-square"></i></span></a>
                         <a href=""><span><i class="fab fa-google-plus-square"></i></span></a>
@@ -63,7 +68,7 @@
                             <input type="checkbox" name="remember"> Nhớ mật khẩu
                         </div>
                         <div class="form-group">
-                            <input type="submit" value="Login" class="btn float-right login_btn">
+                            <input type="submit" value="Đăng nhập" class="btn float-right login_btn">
                         </div>
                     </form>
                 </div>

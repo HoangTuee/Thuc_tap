@@ -31,7 +31,7 @@ class SanphamController extends Controller
         $sanpham->tensanpham = $request->tensanpham;
         $sanpham->giasanpham = $request->giasanpham;
         $sanpham->anhsanpham = 'storage/sanpham/' . $imgName;
-        $sanpham->giakhuyenmai = $request->giakhuyenmai ?? '';
+        $sanpham->giakhuyenmai = $request->giakhuyenmai ?? '0';
         $sanpham->thongso_sanpham = $request->thongso_sanpham ?? '';
         $sanpham->danhmuc = $request->danhmuc;
         $sanpham->hangsanpham = $request->hangsanpham;
@@ -61,7 +61,7 @@ class SanphamController extends Controller
         $sanpham = SanPham::findOrFail($id);
         $sanpham->tensanpham = $request->tensanpham;
         $sanpham->giasanpham = $request->giasanpham;
-        $sanpham->giakhuyenmai = $request->giakhuyenmai ?? '';
+        $sanpham->giakhuyenmai = $request->giakhuyenmai ?? '0';
         $sanpham->thongso_sanpham = $request->thongso_sanpham ?? '';
         $sanpham->danhmuc = $request->danhmuc;
         $sanpham->hangsanpham = $request->hangsanpham;
@@ -76,15 +76,37 @@ class SanphamController extends Controller
         return redirect()->route('sanpham')->with('success', 'Sua san pham thanh cong');
     }
 
-    public function delete_sanpham(Request $request, $id){
+    public function delete_sanpham(Request $request, $id)
+    {
         sanpham::destroy($id);
         return redirect()->route('sanpham')->with('success', 'Xoa san pham thanh cong');
     }
 
     public function sanpham()
     {
-        $sanphams = sanpham::orderBy('id_sanpham','DESC')->paginate(4);
+        $sanphams = sanpham::orderBy('id_sanpham', 'DESC')->paginate(4);
         return view('admin/ql_sanpham', compact('sanphams'));
     }
 
+    public function search(Request $request)
+    {
+        // Lấy giá trị tìm kiếm từ request
+        $search = $request->input('search-header');
+
+        // Kiểm tra nếu giá trị tìm kiếm không rỗng
+        if ($search) {
+            // Tìm kiếm sản phẩm theo tên và thông số và phân trang
+            $sanphams = sanpham::where('tensanpham', 'LIKE', '%' . $search . '%')
+                ->orWhere('thongso_sanpham', 'LIKE', '%' . $search . '%')
+                ->paginate(4);
+        } else {
+            // Nếu không có giá trị tìm kiếm, trả về tất cả sản phẩm
+            $sanphams = sanpham::paginate(4);
+        }
+        if ($sanphams == null) {
+            return redirect()->route('search')->with('success', 'Sản phẩm không tồn tại');
+        } else {
+            return view('user.timkiem', compact('sanphams', 'search'));
+        }
+    }
 }

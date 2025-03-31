@@ -22,7 +22,7 @@ class AdminMiddleware
 
         $user = Auth::user();
 
-        if ($user->phanquyen == 'admin' || $user->phanquyen == 'banhang') {
+        if ($user->phanquyen == 'admin') {
             return $next($request);
         }
         return redirect('/login')->withErrors(['unauthorized' => 'Bạn không có quyền truy cập!']);

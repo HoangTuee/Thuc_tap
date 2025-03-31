@@ -3,14 +3,29 @@
 
     <div class="container py-5">
         <h1 class="mb-4">🛒 Giỏ Hàng Của Bạn</h1>
-
+        @if(session('success'))
+        <div class="alert alert-success">
+            {{ session('success') }}
+        </div>
+        @endif
+        @if(session('success delete'))
+        <div class="alert alert-danger">
+            {{ session('success delete') }}
+        </div>
+        @endif
         <!-- Danh sách sản phẩm -->
+        @if($giohang->isEmpty())
+        <h1 style="text-align: center; color:red; font-size:150%; border: 1px solid black">
+            Không có sản phẩm nào trong giỏ hàng
+            (<a href="{{ route('index') }}" style="text-decoration: none">Mua hàng</a>)
+        </h1>
+        @else
         <div class="card mb-4">
             <div class="card-body">
                 @foreach ($giohang as $gh)
                     <div class="row g-3 mb-4 cart-item">
                         <div class="col-12 col-md-3">
-                            <img src="{{ asset($gh->anhsanpham) }}" class="cart-item-image img-fluid" alt="Sản phẩm">
+                            <img src="{{ asset($gh->sanpham->anhsanpham) }}" class="cart-item-image img-fluid" alt="Sản phẩm">
                         </div>
 
                         <div class="col-12 col-md-5">
@@ -33,14 +48,18 @@
                         </div>
 
                         <div class="col-12 col-md-2">
-                            <button class="btn btn-danger w-100" onclick="removeItem(this)">
-                                <i class="fas fa-trash me-2"></i>Xóa
-                            </button>
+                                <form action="{{ route('deletegiohang',$gh->id_giohang) }}" method="POST">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" onclick="return confirm('Bạn có chắc muốn xóa sản phẩm này không?')"
+                                    class="btn btn-danger w-100">Xóa</button>
+                                </form>
                         </div>
                     </div>
                 @endforeach
             </div>
         </div>
+        @endif
 
         <!-- Tổng kết -->
         <div class="cart-summary-card">

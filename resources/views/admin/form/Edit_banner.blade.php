@@ -1,10 +1,12 @@
 @extends('admin.master')
 
 @section('body')
+    <div class="container mt-3">
+        <a href="{{ route('qlbanner') }}" class="btn btn-primary">
+            <i class="fa-solid fa-left-long"></i></a>
+    </div>
     <div class="content-page">
-        <div class="content-header">
-            <h2 class="content-title">Sửa Banner</h2>
-        </div>
+
         @if ($errors->any())
             <div class="alert alert-danger">
                 <ul>
@@ -16,7 +18,10 @@
         @endif
         <div class="card">
             <div class="card-body">
-                <form action="{{ route('edit_banner',$banner) }}" method="POST" enctype="multipart/form-data">
+                <div class="content-header">
+                    <h2 class="content-title">Sửa Banner</h2>
+                </div>
+                <form action="{{ route('edit_banner', $banner) }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     @method('PUT')
                     <div class="form-group">

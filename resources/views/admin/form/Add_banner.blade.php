@@ -1,13 +1,16 @@
 @extends('admin.master')
 
 @section('body')
+    <div class="container mt-3">
+        <a href="{{ route('qlbanner') }}" class="btn btn-primary">
+            <i class="fa-solid fa-left-long"></i></a>
+    </div>
     <div class="content-page">
-        <div class="content-header">
-            <h2 class="content-title">Thêm Banner</h2>
-        </div>
-
         <div class="card">
             <div class="card-body">
+                <div class="content-header">
+                    <h2 class="content-title">Thêm Banner</h2>
+                </div>
                 <form action="{{ route('add_banner') }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="mb-3">

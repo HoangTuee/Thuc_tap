@@ -6,7 +6,7 @@
             <h2 class="content-title">Quản lý nhân viên</h2>
             <div>
                 <button class="btn btn-primary"><a href="{{ route('view_add_user') }}">Thêm mới</a></button>
-                <input type="text" class="search-box" placeholder="Tìm kiếm khách hàng...">
+                <input type="text" class="search-box" placeholder="Tìm kiếm taif khoản...">
             </div>
         </div>
         @if (session('success'))
@@ -36,7 +36,7 @@
                             <form action="{{ route('delete_user', $user->id_user) }}" method="POST" style="display:inline-block;">
                                 @csrf
                                 @method('DELETE')
-                                <button type="submit" onclick="return confirm('Bạn có chắc muốn xóa user này không?')"
+                                <button type="submit" onclick="return confirm('Bạn có chắc muốn xóa tài khoản này không?')"
                                     class="btn btn-danger btn-sm">Xóa</button>
                             </form>
                         </td>

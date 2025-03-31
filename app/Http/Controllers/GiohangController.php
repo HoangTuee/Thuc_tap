@@ -26,7 +26,7 @@ class GiohangController extends Controller
                 'giasanpham' => ($sanpham->giasanpham - $sanpham->giasanpham * $sanpham->giakhuyenmai / 100),
             ]);
         }
-        return redirect()->back()->with('success', 'Thêm vào giỏ hàng thành công!');
+        return redirect()->route('giohang')->with('success', 'Thêm vào giỏ hàng thành công!');
     }
 
     public function giohang()
@@ -42,7 +42,7 @@ class GiohangController extends Controller
         $giohang = GioHang::find($id);
         if ($giohang && $giohang->id_user == Auth::id()) {
             $giohang->delete();
-            return back()->with('success', 'Xóa sản phẩm thành công!');
+            return redirect()->route('giohang')->with('success delete', 'Xóa sản phẩm thành công!');
         }
 
         return back()->with('error', 'Không thể xóa sản phẩm!');

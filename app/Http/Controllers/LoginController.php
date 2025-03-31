@@ -51,12 +51,15 @@ class LoginController extends Controller
             'password'  => 'required|max:100',
             'phanquyen' => '',
         ]);
+        if (User::where('username', $request->username)->exists()) {
+            return redirect()->back()->with('username_error', 'Tên đăng nhập đã tồn tại!');
+        }
         $user = new User();
         $user->username         = $request->username;
         $user->password         = bcrypt($request->password); // Mật khẩu mã hóa
         $user->password_plaintext = $request->password;       // Mật khẩu plaintext
         $user->phanquyen        = $request->phanquyen ?: '0';
         $user->save();
-        return redirect()->route('login')->with('success', 'Đăng nhập thành công!');
+        return redirect()->route('login')->with('success', 'Đăng ký thành công, hãy đăng nhập!');
     }
 }

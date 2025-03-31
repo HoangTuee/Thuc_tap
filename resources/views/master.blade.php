@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Website Demo</title>
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/timkiem.css') }}">
     <link rel="stylesheet" href="{{ asset('css/giohang.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" />
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
@@ -21,7 +22,7 @@
                 <a href="{{ route('index') }}"><img src="{{ asset('storage/defauls/logo.png') }}"
                         alt=""id="logo-header" /></a>
                 <div class="search">
-                    <form action="" method="post">
+                    <form action="{{ route('search') }}" method="get">
                         <input type="text" placeholder="Bạn muốn tìm sản phẩm gì ?"
                             name="search-header"id="search-header" />
                         <button type="submit" id="search-buttom">
@@ -42,16 +43,16 @@
             <div class="nav_menu">
                 <ul class="nav_list">
                     <li class="nav_link">
-                        <a href="#" class="nav-link"><i class="fa-solid fa-laptop"></i>Laptop mới</a>
+                        <a href="{{ route('index') }}" class="nav-link"><i class="fa-solid fa-laptop"></i>Home</a>
                     </li>
                     <li class="nav_link">
-                        <a href="/lap_top_cu.html" class="nav-link"><i class="fa-solid fa-laptop"></i>Laptop cũ</a>
+                        <a href="/lap_top_cu.html" class="nav-link"><i class="fa-solid fa-laptop"></i>Options</a>
                     </li>
                     <li class="nav_link">
-                        <a href="{{ route('khuyenmai') }}" class="nav-link"><i class="fa-solid fa-gift"></i>Khuyến mãi</a>
+                        <a href="{{ route('khuyenmai') }}" class="nav-link"><i class="fa-solid fa-gift"></i>Sale</a>
                     </li>
                     <li class="nav_link">
-                        <a href="{{ route('tintuc') }}" class="nav-link"><i class="fa-solid fa-file-invoice-dollar"></i>Tin tức</a>
+                        <a href="{{ route('tintuc') }}" class="nav-link"><i class="fa-solid fa-file-invoice-dollar"></i>News</a>
                     </li>
                 </ul>
             </div>

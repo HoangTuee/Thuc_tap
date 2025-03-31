@@ -17,7 +17,7 @@
 <div class="container welcome-container">
     <div class="card">
         <h1 class="text-primary">Chào mừng {{ Auth::user()->username }} đến với Trang Quản Trị</h1>
-        <p>Quản lý nội dung, người dùng và cài đặt hệ thống dễ dàng.</p>
+        <p>Quản lý nội dung, người dùng và quản lý trang web dễ dàng.</p>
     </div>
 </div>
 
