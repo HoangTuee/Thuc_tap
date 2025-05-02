@@ -34,7 +34,42 @@
                     <p class="text-header"><i class="fa-solid fa-phone"></i> Hotline</p>
                     <p class="text-header2">0359 640 373</p>
                 </div>
-                <a href="{{ route('giohang') }}" class="shop"><i class="fa-solid fa-cart-shopping"></i></a>
+                <style>
+                    .shop-container {
+                        position: relative;
+                        display: inline-block;
+                    }
+
+                    .cart-count {
+                        position: absolute;
+                        top: -8px;
+                        right: -10px;
+                        background: red;
+                        color: white;
+                        border-radius: 50%;
+                        padding: 2px 6px;
+                        font-size: 12px;
+                        font-weight: bold;
+                    }
+                </style>
+
+                @php
+                    use App\Models\giohang;
+                    $od = 0;
+                    if (auth()->check()) {
+                        $od = giohang::where('id_user', 'LIKE', auth()->user()->id_user)->count();
+                    }
+                @endphp
+
+                <div class="shop-container">
+                    <a href="{{ route('giohang') }}" class="shop">
+                        <i class="fa-solid fa-cart-shopping"></i>
+                    </a>
+                    @if ($od > 0)
+                        <span class="cart-count">{{ $od }}</span>
+                    @endif
+                </div>
+
             </div>
         </div>
 
@@ -46,13 +81,14 @@
                         <a href="{{ route('index') }}" class="nav-link"><i class="fa-solid fa-laptop"></i>Home</a>
                     </li>
                     <li class="nav_link">
-                        <a href="/lap_top_cu.html" class="nav-link"><i class="fa-solid fa-laptop"></i>Options</a>
+                        <a href="{{ route('sanphams') }}" class="nav-link"><i class="fa-solid fa-laptop"></i>Options</a>
                     </li>
                     <li class="nav_link">
                         <a href="{{ route('khuyenmai') }}" class="nav-link"><i class="fa-solid fa-gift"></i>Sale</a>
                     </li>
                     <li class="nav_link">
-                        <a href="{{ route('tintuc') }}" class="nav-link"><i class="fa-solid fa-file-invoice-dollar"></i>News</a>
+                        <a href="{{ route('tintuc') }}" class="nav-link"><i
+                                class="fa-solid fa-file-invoice-dollar"></i>News</a>
                     </li>
                 </ul>
             </div>
@@ -65,7 +101,8 @@
                 </div>
                 <div class="menu_mobile1">
                     <ul class="ul_mobile">
-                        <li class="li_mobile"><a href="{{ route('giohang') }}"><i class="fa-solid fa-basket-shopping"></i>Giỏ hàng</a>
+                        <li class="li_mobile"><a href="{{ route('giohang') }}"><i
+                                    class="fa-solid fa-basket-shopping"></i>Giỏ hàng</a>
                         </li>
                         <li class="li_mobile"><a href=""><i class="fa-solid fa-phone"></i>Liên hệ</a></li>
                     </ul>
@@ -92,7 +129,8 @@
                         <a href="#services" class="nav-mobile_link"><i class="fa-solid fa-gift"></i>Khuyến mãi</a>
                     </li>
                     <li>
-                        <a href="#contact" class="nav-mobile_link"><i class="fa-solid fa-file-invoice-dollar"></i>Tin tức</a>
+                        <a href="#contact" class="nav-mobile_link"><i class="fa-solid fa-file-invoice-dollar"></i>Tin
+                            tức</a>
                     </li>
                 </ul>
             </div>
@@ -104,7 +142,7 @@
     <footer>
         <div class="footer-container">
             <div class="footer-left">
-                <h3>Aquafinawaterstore.com</h3>
+                <h3>Laptopshop.com</h3>
                 <p>📍 An Ninh, Tân Hòa, Quốc Oai, Hà Nội</p>
                 <p>📞 Hotline: 0359640373</p>
                 <p>

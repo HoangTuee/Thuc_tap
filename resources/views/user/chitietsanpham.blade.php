@@ -67,7 +67,7 @@
                         @if ($chitiet->tinhtrang_sanpham == 'Còn hàng')
                             <button class="buy-now"><i class="fa-solid fa-cart-shopping"></i> Thêm vào giỏ hàng</button>
                         @else
-                            <a href="{{ route('giohang') }}" onclick="alert('Hết hàng mua con cac')" class="giohang">
+                            <a href="{{ route('giohang') }}" onclick="alert('Sản phẩm đã hết hàng')" class="giohang">
                                 <i class="fa-solid fa-cart-shopping"></i> Hết hàng
                             </a>
                         @endif

@@ -6,11 +6,18 @@
             <h2 class="content-title">Quản lý sản phẩm</h2>
             <div>
                 <a href="{{ route('view_add_sanpham') }}" class="btn btn-primary">Thêm mới</a>
-                <input type="text" class="search-box" placeholder="Tìm kiếm sản phẩm...">
+                <form action="{{ route('timkiem_sanpham') }}" method="GET" style="display: inline;">
+                    <input type="text" name="keyword" class="search-box" placeholder="Tìm kiếm sản phẩm..."
+                        value="{{ request('keyword') }}">
+                    <button type="submit" class="btn btn-info">Tìm</button>
+                </form>
             </div>
         </div>
 
         <table>
+            @if (request('keyword'))
+                <p>Kết quả tìm kiếm cho: <strong>{{ request('keyword') }}</strong></p>
+            @endif
             <thead>
                 <tr class="tr">
                     <th>Tên sản phẩm</th>
@@ -36,7 +43,8 @@
                         <td>{{ $sanpham->thongso_sanpham }}</td>
                         <td>{{ $sanpham->danhmuc }}</td>
                         <td style="width: 300px">
-                            <a href="{{ route('qlchitietsanpham', $sanpham->tensanpham) }}"class="btn btn-success">Chi tiết</a>
+                            <a href="{{ route('qlchitietsanpham', $sanpham->tensanpham) }}"class="btn btn-success">Chi
+                                tiết</a>
                             <a href="{{ route('view_edit_sanpham', $sanpham->id_sanpham) }}"class="btn btn-success">Sửa</a>
                             <form action="{{ route('delete_sanpham', $sanpham->id_sanpham) }}" method="POST"
                                 style="display:inline;">

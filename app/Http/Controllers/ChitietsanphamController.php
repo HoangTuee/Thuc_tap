@@ -144,4 +144,15 @@ class ChitietsanphamController extends Controller
         $sanpham = sanpham::where('tensanpham', $tensanpham)->firstOrFail();
         return view('admin.ql_chitietsanpham', compact('chitiet', 'sanpham'));
     }
+    public function timKiem(Request $request)
+    {
+        $keyword = $request->input('keyword');
+
+        $chitiets = ChiTietSanPham::where('tensanpham', 'LIKE', "%{$keyword}%")
+            ->orWhere('cauhinh_sanpham', 'LIKE', "%{$keyword}%")
+            ->orWhere('tinhtrang_sanpham', 'LIKE', "%{$keyword}%")
+            ->paginate(10);
+
+        return view('admin.ql_chitiet', compact('chitiets'));
+    }
 }

@@ -4,12 +4,18 @@
     <div id="product-management" class="content-page">
         <div class="content-header">
             <h2 class="content-title">Quản lý chi tiết</h2>
-            <div>
-                <input type="text" class="search-box" placeholder="Tìm kiếm sản phẩm...">
-            </div>
+            <form action="{{ route('admin.timkiem_chitiet') }}" method="GET" style="display: inline;">
+                <input type="text" name="keyword" class="search-box" placeholder="Tìm kiếm chi tiết sản phẩm..."
+                    value="{{ request('keyword') }}">
+                <button type="submit" class="btn btn-info">Tìm</button>
+            </form>
         </div>
 
         <table>
+            @if (request('keyword'))
+                <p>Kết quả tìm kiếm cho: <strong>{{ request('keyword') }}</strong></p>
+            @endif
+
             <thead>
                 <tr>
                     <th>Tên sản phẩm</th>

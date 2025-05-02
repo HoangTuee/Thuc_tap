@@ -3,10 +3,13 @@
 @section('body')
     <div id="order-management" class="content-page">
         <div class="content-header">
-            <h2 class="content-title">Quản lý nhân viên</h2>
+            <h2 class="content-title">Quản lý tài khoản</h2>
             <div>
                 <button class="btn btn-primary"><a href="{{ route('view_add_user') }}">Thêm mới</a></button>
-                <input type="text" class="search-box" placeholder="Tìm kiếm taif khoản...">
+                <form action="{{ route('timkiem_user') }}" method="GET" style="display: inline;">
+                    <input type="text" name="keyword" class="search-box" placeholder="Tìm kiếm tài khoản..." value="{{ request('keyword') }}">
+                    <button type="submit" class="btn btn-info">Tìm</button>
+                </form>
             </div>
         </div>
         @if (session('success'))
@@ -15,6 +18,9 @@
             </div>
         @endif
         <table>
+            @if (request('keyword'))
+                <p>Kết quả tìm kiếm cho: <strong>{{ request('keyword') }}</strong></p>
+            @endif
             <thead>
                 <tr>
                     <th>Id</th>

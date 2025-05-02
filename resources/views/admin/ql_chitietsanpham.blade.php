@@ -5,7 +5,7 @@
         <div class="content-header">
             <h2 class="content-title">Chi tiết : {{ $sanpham->tensanpham }}</h2>
         </div>
-
+        
         <table>
             <thead>
                 <tr>

@@ -75,6 +75,15 @@ class AdminController extends Controller
         return view('admin.ql_admin', compact('users'));
     }
 
-    //ql loai san pham
+    public function timKiem(Request $request)
+{
+    $keyword = $request->input('keyword');
+
+    $users = User::where('username', 'LIKE', "%{$keyword}%")
+        ->orWhere('phanquyen', 'LIKE', "%{$keyword}%")
+        ->paginate(10);
+
+    return view('admin/ql_admin', compact('users'));
+}
 
 }

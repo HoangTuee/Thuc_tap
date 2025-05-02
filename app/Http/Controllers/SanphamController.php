@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\banner;
 use App\Models\sanpham;
 use Illuminate\Http\Request;
 
@@ -108,5 +109,23 @@ class SanphamController extends Controller
         } else {
             return view('user.timkiem', compact('sanphams', 'search'));
         }
+    }
+
+    public function sanphams(Request $request)
+    {
+        $banners = banner::all();
+        $sanphams = sanpham::paginate(8);
+        return view('user.sanpham', compact('sanphams', 'banners'));
+    }
+    public function timKiem(Request $request)
+    {
+        $keyword = $request->input('keyword');
+
+        $sanphams = SanPham::where('tensanpham', 'LIKE', "%{$keyword}%")
+            ->orWhere('hangsanpham', 'LIKE', "%{$keyword}%")
+            ->orWhere('danhmuc', 'LIKE', "%{$keyword}%")
+            ->paginate(10);
+
+        return view('admin/ql_sanpham', compact('sanphams'));
     }
 }

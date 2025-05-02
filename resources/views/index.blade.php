@@ -149,7 +149,7 @@
         <section class="sanpham-phanloai">
             <div class="category-bar">
                 <div class="category-title">
-                    <span>Linh Kiện - Phụ Kiện</span>
+                    <span>LINH KIỆN - PHỤ KIỆN</span>
                 </div>
                 <div class="price-range">
                     <span class="label">Mức giá:</span>

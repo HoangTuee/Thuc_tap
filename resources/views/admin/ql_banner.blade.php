@@ -6,7 +6,6 @@
             <h2 class="content-title">Quản lý banner</h2>
             <div>
                 <button class="btn btn-primary"><a href="{{ route('view_add_banner') }}">Thêm mới</a></button>
-                <input type="text" class="search-box" placeholder="Tìm kiếm khách hàng...">
             </div>
         </div>
 

@@ -5,7 +5,7 @@
             <i class="fa-solid fa-left-long"></i></a>
     </div>
     <div class="container mt-4">
-        <h1>Thêm User</h1>
+        <h1>Thêm tài khoản</h1>
         <form action="{{ route('users.store') }}" method="POST">
             @csrf
             <div class="form-group">

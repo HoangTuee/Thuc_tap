@@ -60,6 +60,8 @@ Route::middleware(['admin'])->group(function () {
     Route::get('admin/{id}/view_edit_sanpham',[SanphamController::class, 'view_edit_sanpham'])->name('view_edit_sanpham');
     Route::put('admin/{id}/edit_sanpham',[SanphamController::class, 'edit_sanpham'])->name('edit_sanpham');
     Route::delete('admin/{id}/delete_sanpham',[SanphamController::class, 'delete_sanpham'])->name('delete_sanpham');
+    Route::get('/admin/sanpham/timkiem', [SanPhamController::class, 'timKiem'])->name('timkiem_sanpham');
+
 
     //ql tai khoan
     Route::get('admin/qladmin', [AdminController::class, 'qladmin'])->name('qladmin');
@@ -68,6 +70,8 @@ Route::middleware(['admin'])->group(function () {
     Route::get('admin/{id}/edituser', [AdminController::class, 'view_edit_user'])->name('view_edit_user');
     Route::put('admin/{id}/edituser', [AdminController::class, 'edit_user'])->name('edit_user');
     Route::delete('admin/{id}/delete_user', [AdminController::class, 'delete_user'])->name('delete_user');
+    Route::get('/admin/user/timkiem', [AdminController::class, 'timKiem'])->name('timkiem_user');
+
 
     //ql banner
     Route::get('admin/qlbanner', [BannerController::class, 'qlbanner'])->name('qlbanner');
@@ -84,6 +88,8 @@ Route::middleware(['admin'])->group(function () {
     Route::get('admin/{id_chitiet}/view_edit_chitiet',[ChitietsanphamController::class, 'view_edit_chitiet'])->name('view_edit_chitiet');
     Route::put('admin/{tensanpham}/edit_chitiet',[ChitietsanphamController::class, 'edit_chitiet'])->name('edit_chitiet');
     Route::delete('admin/{id_chitiet}/delete_chitiet',[ChitietsanphamController::class, 'delete_chitiet'])->name('delete_chitiet');
+    Route::get('/admin/chitiet/timkiem', [ChiTietSanPhamController::class, 'timKiem'])->name('admin.timkiem_chitiet');
+
 
     //ql chi tiet tung san pham
     Route::get('admin/{tensanpham}/qlchitietsanpham',[ChitietsanphamController::class, 'qlchitietsanpham'])->name('qlchitietsanpham');
@@ -96,3 +102,4 @@ Route::middleware(['admin'])->group(function () {
 
 });
 Route::get('search',[SanphamController::class, 'search'])->name('search');
+Route::get('sanpham',[SanphamController::class, 'sanphams'])->name('sanphams');

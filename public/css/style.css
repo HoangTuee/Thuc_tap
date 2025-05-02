@@ -64,7 +64,7 @@ body {
 
 .nav_link {
     position: relative;
-    height: 40px;
+    height: 50px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -351,6 +351,7 @@ body {
     transition: all linear 0.2s;
     z-index: 9999;
 }
+
 
 .nav_mobile_list {
     margin-top: 24px;
