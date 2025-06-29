@@ -43,10 +43,10 @@
                             {{ number_format($sanpham->giasanpham, 0, ',', '.') }}₫
                         </p>
                     @endif
-                    <p class="product-status">Tình trạng: <span class="status">{{ $chitiet->tinhtrang_sanpham }}</span></p>
+                    <p class="product-status"><h3>Tình trạng:</h3><span class="status">{{ $chitiet->tinhtrang_sanpham }}</span></p>
 
                     <h3>Cấu hình:</h3>
-                    <p>{!! nl2br(e(wordwrap($chitiet->cauhinh_sanpham, 80, "\n", true))) !!}</p>
+                    <p>{!! nl2br(e(wordwrap($chitiet->cauhinh_sanpham, 70, "\n", true))) !!}</p>
 
                     <div class="promotion">
                         <h3>Quà tặng/Khuyến mãi</h3>
@@ -100,7 +100,7 @@
                             {{ number_format($sanpham->giasanpham, 0, ',', '.') }}₫
                         </p>
                     @endif
-                    <p class="product-status">Tình trạng: <span class="status">{{ $chitiet->tinhtrang_sanpham }}</span>
+                    <p class="product-status"><h3>Tình trạng:</h3> <span class="status">{{ $chitiet->tinhtrang_sanpham }}</span>
                     </p>
                     @if ($chitiet->cauhinh_sanpham)
                         <h3>Model:</h3>

@@ -11,14 +11,14 @@ class LoginController extends Controller
 {
     public function login(Request $request){
         $request->validate([
-            'username' => 'required',
+            'username' => 'required|email',
             'password' => 'required',
         ]);
 
         $user = User::where('username', $request->username)->first();
 
         if (!$user || !Hash::check($request->password, $user->password)) {
-            return back()->withErrors(['login_error' => 'Sai tài khoản hoặc mật khẩu']);
+            return back()->withErrors(['login_error' => 'Sai email đăng nhập hoặc mật khẩu']);
         }
 
         Auth::login($user);
@@ -27,8 +27,8 @@ class LoginController extends Controller
         //phan quyen
         if ($user->phanquyen == 'admin') {
             return redirect()->route('admin');
-        } elseif ($user->phanquyen == 'banhang') {
-            return redirect()->route('sanpham');
+        } elseif ($user->phanquyen == 'sale') {
+            return redirect()->route('sale');
         } else {
             return redirect('/'); // Mặc định về trang chủ
         }
@@ -38,7 +38,7 @@ class LoginController extends Controller
     {
         Auth::logout();
         session()->forget('phanquyen');
-        return redirect('/login');
+        return redirect('/');
     }
 
     public function signup(){
@@ -47,12 +47,12 @@ class LoginController extends Controller
 
     public function add_signup(Request $request){
         $request->validate([
-            'username'  => 'required|max:100',
+            'username'  => 'required|email|max:100',
             'password'  => 'required|max:100',
             'phanquyen' => '',
         ]);
         if (User::where('username', $request->username)->exists()) {
-            return redirect()->back()->with('username_error', 'Tên đăng nhập đã tồn tại!');
+            return redirect()->back()->with('username_error', 'Email đăng nhập đã tồn tại!');
         }
         $user = new User();
         $user->username         = $request->username;

@@ -128,7 +128,6 @@ class ChitietsanphamController extends Controller
 
     public function delete_chitiet($id_chitiet)
     {
-        dd($id_chitiet);
         chitietsanpham::destroy($id_chitiet);
         return redirect()->route('qlchitiet')->with('success', 'Xoa chi tiet thanh cong');
     }

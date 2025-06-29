@@ -56,14 +56,19 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text"><i class="fas fa-user"></i></span>
                             </div>
-                            <input type="text" class="form-control" name="username" placeholder="Username" required>
+                            <input type="text" class="form-control" name="username" placeholder="Email" required>
                         </div>
                         <div class="input-group form-group">
                             <div class="input-group-prepend">
                                 <span class="input-group-text"><i class="fas fa-key"></i></span>
                             </div>
-                            <input type="password" class="form-control" name="password" placeholder="Password" required>
+                            <input type="password" id="passwordRegister" class="form-control" name="password"
+                                placeholder="Password" required>
+                            <div class="input-group-append" id="togglePasswordRegister" style="cursor: pointer;">
+                                <span class="input-group-text"><i class="fas fa-eye"></i></span>
+                            </div>
                         </div>
+
                         <div class="row align-items-center remember">
                             <input type="checkbox" name="remember"> Nhớ mật khẩu
                         </div>
@@ -77,7 +82,7 @@
                         Bạn chưa có tài khoản?<a href="{{ route('signup') }}">Đăng ký</a>
                     </div>
                     <div class="d-flex justify-content-center">
-                        <a href="#">Quên tài khoản hoặc mật khẩu?</a>
+                        <a href="{{ route('view_quenmk') }}">Quên tài khoản hoặc mật khẩu?</a>
                     </div>
                 </div>
             </div>

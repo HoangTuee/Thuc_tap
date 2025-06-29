@@ -25,7 +25,7 @@ class AdminController extends Controller
     public function add_user(Request $request)
     {
         $request->validate([
-            'username'  => 'required|max:100',
+            'username'  => 'required|email|max:100',
             'password'  => 'required|max:100',
             'phanquyen' => '',
         ]);
@@ -49,7 +49,7 @@ class AdminController extends Controller
         $user = User::findOrFail($id);
 
         $request->validate([
-            'username'  => 'required|max:100',
+            'username'  => 'required|email|max:100',
             'password'  => 'required|max:100',
             'phanquyen' => '',
         ]);

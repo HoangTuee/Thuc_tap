@@ -43,8 +43,12 @@
                         <td>{{ $sanpham->thongso_sanpham }}</td>
                         <td>{{ $sanpham->danhmuc }}</td>
                         <td style="width: 300px">
-                            <a href="{{ route('qlchitietsanpham', $sanpham->tensanpham) }}"class="btn btn-success">Chi
-                                tiết</a>
+                            @if (in_array($sanpham->tensanpham, $sanphamHasDetail))
+                                <a href="{{ route('qlchitietsanpham', $sanpham->tensanpham) }}" class="btn btn-success">Chi tiết</a>
+                            @else
+                                <a href="{{ route('qlchitietsanpham', $sanpham->tensanpham) }}"
+                                    class="btn btn-warning">Thêm chi tiết</a>
+                            @endif
                             <a href="{{ route('view_edit_sanpham', $sanpham->id_sanpham) }}"class="btn btn-success">Sửa</a>
                             <form action="{{ route('delete_sanpham', $sanpham->id_sanpham) }}" method="POST"
                                 style="display:inline;">

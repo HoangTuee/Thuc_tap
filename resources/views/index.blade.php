@@ -42,12 +42,12 @@
 
         <section class="adress">
             <div id="dia-chi">
-                <div class="diachi">
+                <div class="diachi" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
                     <p class="text-diachi">Cơ sở 1</p>
                     <p class="text-">Tân hòa - Quốc Oai - Hà Nội</p>
                 </div>
-                <div class="diachi">
-                    <p class="text-diachi">Cơ sở 1</p>
+                <div class="diachi" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                    <p class="text-diachi">Cơ sở 2</p>
                     <p class="text-">Tân hòa - Quốc Oai - Hà Nội</p>
                 </div>
             </div>
@@ -55,7 +55,7 @@
 
         <section class="sanpham-phanloai">
             <div class="category-bar">
-                <div class="category-title">
+                <div class="category-title" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
                     <span>HỌC TẬP - VĂN PHÒNG</span>
                 </div>
                 <div class="price-range">
@@ -101,7 +101,7 @@
 
         <section class="sanpham-phanloai">
             <div class="category-bar">
-                <div class="category-title">
+                <div class="category-title" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
                     <span>GAMING - ĐỒ HỌA</span>
                 </div>
                 <div class="price-range">
@@ -148,7 +148,7 @@
 
         <section class="sanpham-phanloai">
             <div class="category-bar">
-                <div class="category-title">
+                <div class="category-title" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
                     <span>LINH KIỆN - PHỤ KIỆN</span>
                 </div>
                 <div class="price-range">

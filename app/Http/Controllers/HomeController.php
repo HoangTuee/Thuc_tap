@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\banner;
 use App\Models\sanpham;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\TestMail;
 
 class HomeController extends Controller
 {
@@ -17,5 +19,14 @@ class HomeController extends Controller
         $linhKien = sanpham::where('danhmuc', 'Linh Kiện - Phụ Kiện')->paginate(4);
         $banners = banner::all();
         return view('index', compact('hocTapVanPhong', 'gamingDoHoa', 'linhKien', 'banners'));
+    }
+
+    public function testmail (){
+        Mail::to('hoangtuee3112@gmail.com')->send(new TestMail());
+        return 'Success !';
+    }
+
+    public function view_quenmk(){
+        return view('login.Quenmk');
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\banner;
+use App\Models\chitietsanpham;
 use App\Models\sanpham;
 use Illuminate\Http\Request;
 
@@ -86,7 +87,8 @@ class SanphamController extends Controller
     public function sanpham()
     {
         $sanphams = sanpham::orderBy('id_sanpham', 'DESC')->paginate(4);
-        return view('admin/ql_sanpham', compact('sanphams'));
+        $sanphamHasDetail = chitietsanpham::pluck('tensanpham')->toArray();
+        return view('admin/ql_sanpham', compact('sanphams', 'sanphamHasDetail'));
     }
 
     public function search(Request $request)
@@ -104,11 +106,13 @@ class SanphamController extends Controller
             // Nếu không có giá trị tìm kiếm, trả về tất cả sản phẩm
             $sanphams = sanpham::paginate(4);
         }
+
         if ($sanphams == null) {
             return redirect()->route('search')->with('success', 'Sản phẩm không tồn tại');
         } else {
-            return view('user.timkiem', compact('sanphams', 'search'));
+            return view('user.timkiem', compact('sanphams', 'search', 'sanphamHasDetail'));
         }
+
     }
 
     public function sanphams(Request $request)

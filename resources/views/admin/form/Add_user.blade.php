@@ -10,7 +10,7 @@
             @csrf
             <div class="form-group">
                 <label for="username">Tên đăng nhập</label>
-                <input type="text" name="username" class="form-control" id="username" placeholder="Nhập tên đăng nhập"
+                <input type="text" name="username" class="form-control" id="username" placeholder="Email đăng nhập"
                     required>
             </div>
             <div class="form-group">
