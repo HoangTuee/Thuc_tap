@@ -229,8 +229,12 @@
                         <i class="fas fa-shopping-cart me-2"></i>
                         Giỏ hàng của bạn
                     </h1>
+                    @php
+                        // Lọc ra những mục trong giỏ hàng có sản phẩm "Còn hàng" rồi đếm
+                        $soSanPhamConHang = $giohang->where('sanpham.chiTiet.tinhtrang_sanpham', 'Còn hàng')->count();
+                    @endphp
                     @if (!$giohang->isEmpty())
-                        <span class="badge badge-count rounded-pill">{{ $giohang->count() }} sản phẩm</span>
+                        <span class="badge badge-count rounded-pill">{{ $soSanPhamConHang }} sản phẩm</span>
                     @endif
                 </div>
             </div>
@@ -264,56 +268,77 @@
                         </a>
                     </div>
                 @else
+                    @php
+                        $subtotal = $giohang->sum(function ($item) {
+                            // Kiểm tra nếu sản phẩm bị lỗi hoặc không tồn tại
+                            if (empty($item->sanpham)) {
+                                return 0;
+                            }
+                            // Tính giá cuối cùng của 1 sản phẩm
+                            $finalPrice =
+                                $item->sanpham->giasanpham -
+                                ($item->sanpham->giasanpham * $item->sanpham->giakhuyenmai) / 100;
+                            return $finalPrice * $item->soluong;
+                        });
+                        $shipping = 30000; // Giá trị cố định
+                        $discount = 0; // Tạm thời, xử lý sau với coupon
+                        $total = $subtotal + $shipping - $discount;
+                    @endphp
                     <div class="row">
                         <div class="col-lg-8">
                             <!-- Cart Items -->
                             <div id="cartItems">
+
                                 @foreach ($giohang as $gh)
-                                    <div class="cart-item" data-price="{{ $gh->giasanpham }}">
-                                        <div class="row align-items-center">
-                                            <div class="col-md-3 col-4">
-                                                <img src="{{ asset($gh->sanpham->anhsanpham) }}" alt="{{ $gh->tensanpham }}"
-                                                    class="cart-item-image">
-                                            </div>
-
-                                            <div class="col-md-4 col-8">
-                                                <h5 class="product-title">{{ $gh->tensanpham }}</h5>
-                                                <p class="product-specs">{{ $gh->sanpham->thongso_sanpham }}</p>
-                                                <div class="price">{{ number_format($gh->giasanpham * $gh->soluong) }}₫
+                                    @if ($gh->sanpham->chiTiet->tinhtrang_sanpham == 'Còn hàng')
+                                        <div class="cart-item"
+                                            data-price="{{ $gh->sanpham->giasanpham - ($gh->sanpham->giasanpham * $gh->sanpham->giakhuyenmai) / 100 }}">
+                                            <div class="row align-items-center">
+                                                <div class="col-md-3 col-4">
+                                                    <img src="{{ asset($gh->sanpham->anhsanpham) }}"
+                                                        alt="{{ $gh->tensanpham }}" class="cart-item-image">
                                                 </div>
-                                            </div>
 
-                                            <div class="col-md-3 col-6 mt-3 mt-md-0">
-                                                <div class="quantity-control">
-                                                    <button type="button" class="quantity-btn"
-                                                        onclick="updateQuantity(this, -1)">
-                                                        <i class="fas fa-minus"></i>
-                                                    </button>
-                                                    <input type="number" value="{{ $gh->soluong }}" min="1"
-                                                        class="form-control quantity-input"
-                                                        onchange="handleManualInputChange(this)" {{-- Dòng mới --}}
-                                                        data-id="{{ $gh->id_giohang }}">
-                                                    <button type="button" class="quantity-btn"
-                                                        onclick="updateQuantity(this, 1)">
-                                                        <i class="fas fa-plus"></i>
-                                                    </button>
+                                                <div class="col-md-4 col-8">
+                                                    <h5 class="product-title">{{ $gh->tensanpham }}</h5>
+                                                    <p class="product-specs">{{ $gh->sanpham->thongso_sanpham }}</p>
+                                                    <div class="price">
+                                                        {{ number_format(($gh->sanpham->giasanpham - ($gh->sanpham->giasanpham * $gh->sanpham->giakhuyenmai) / 100) * $gh->soluong) }}₫
+                                                    </div>
                                                 </div>
-                                            </div>
 
-                                            <div class="col-md-2 col-6 mt-3 mt-md-0 text-end">
-                                                <form action="{{ route('deletegiohang', $gh->id_giohang) }}" method="POST"
-                                                    class="d-inline">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button type="submit"
-                                                        onclick="return confirm('Bạn có chắc muốn xóa sản phẩm này không?')"
-                                                        class="btn remove-btn">
-                                                        <i class="fas fa-trash me-1"></i>Xóa
-                                                    </button>
-                                                </form>
+                                                <div class="col-md-3 col-6 mt-3 mt-md-0">
+                                                    <div class="quantity-control">
+                                                        <button type="button" class="quantity-btn"
+                                                            onclick="updateQuantity(this, -1)">
+                                                            <i class="fas fa-minus"></i>
+                                                        </button>
+                                                        <input type="number" value="{{ $gh->soluong }}" min="1"
+                                                            class="form-control quantity-input"
+                                                            onchange="handleManualInputChange(this)" {{-- Dòng mới --}}
+                                                            data-id="{{ $gh->id_giohang }}">
+                                                        <button type="button" class="quantity-btn"
+                                                            onclick="updateQuantity(this, 1)">
+                                                            <i class="fas fa-plus"></i>
+                                                        </button>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-md-2 col-6 mt-3 mt-md-0 text-end">
+                                                    <form action="{{ route('deletegiohang', $gh->id_giohang) }}"
+                                                        method="POST" class="d-inline">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button type="submit"
+                                                            onclick="return confirm('Bạn có chắc muốn xóa sản phẩm này không?')"
+                                                            class="btn remove-btn">
+                                                            <i class="fas fa-trash me-1"></i>Xóa
+                                                        </button>
+                                                    </form>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
+                                    @endif
                                 @endforeach
                             </div>
 
@@ -335,18 +360,17 @@
 
                                 <div class="d-flex justify-content-between mb-3">
                                     <span>Tạm tính:</span>
-                                    <span
-                                        id="subtotal">{{ number_format($subtotal ??$giohang->sum(function ($item) {return $item->giasanpham * $item->soluong;})) }}₫</span>
+                                    <span id="subtotal">{{ number_format($subtotal) }}₫</span>
                                 </div>
 
                                 <div class="d-flex justify-content-between mb-3">
                                     <span>Phí vận chuyển:</span>
-                                    <span id="shipping">{{ number_format($shipping ?? 30000) }}₫</span>
+                                    <span id="shipping">{{ number_format($shipping) }}₫</span>
                                 </div>
 
                                 <div class="d-flex justify-content-between mb-3 text-success">
                                     <span>Giảm giá:</span>
-                                    <span id="discount">{{ number_format($discount ?? 0) }}₫</span>
+                                    <span id="discount">-{{ number_format($discount) }}₫</span>
                                 </div>
 
                                 <hr class="my-3">
@@ -354,7 +378,7 @@
                                 <div class="d-flex justify-content-between mb-4">
                                     <strong class="h5">Tổng cộng:</strong>
                                     <strong class="h5 text-danger" id="total-amount">
-                                        {{ number_format($total ??$giohang->sum(function ($item) {return $item->giasanpham * $item->soluong;}) +($shipping ?? 30000) -($discount ?? 0)) }}₫
+                                        {{ number_format($total) }}₫
                                     </strong>
                                 </div>
 
@@ -698,39 +722,6 @@
                 });
             }
         }
-
-        // 4. CSS bổ sung cho animation (thêm vào style tag):
-        /*
-        .checkout-btn:disabled {
-            opacity: 0.7;
-            cursor: not-allowed;
-        }
-
-        .spinner-border-sm {
-            width: 1rem;
-            height: 1rem;
-        }
-
-        @keyframes spin {
-            0% {
-                transform: rotate(0deg);
-            }
-            100% {
-                transform: rotate(360deg);
-            }
-        }
-
-        .spinner-border {
-            display: inline-block;
-            width: 2rem;
-            height: 2rem;
-            vertical-align: text-bottom;
-            border: 0.25em solid currentColor;
-            border-right-color: transparent;
-            border-radius: 50%;
-            animation: spin 0.75s linear infinite;
-        }
-        */
 
         // 5. Khởi tạo khi trang load
         document.addEventListener('DOMContentLoaded', function() {

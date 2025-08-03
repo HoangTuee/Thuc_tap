@@ -14,6 +14,7 @@
         <div class="card-body">
             <div class="row gx-3">
                 <div class="col-lg-8 col-md-6 me-auto">
+                    {{-- Sửa: Form action trỏ đến route admin.donhang.index --}}
                     <form action="{{ route('qldonhang') }}" method="GET">
                         <div class="input-group">
                             <input type="text" name="keyword" class="form-control" placeholder="Tìm theo mã đơn hàng, tên, SĐT..." value="{{ request('keyword') }}">
@@ -50,9 +51,10 @@
                     <tbody>
                         @forelse ($donhangs as $donhang)
                         <tr>
-                            <td><strong>{{ $donhang->ma_don_hang_chung }}</strong></td>
+                            {{-- Sửa: Dùng đúng tên cột trong database --}}
+                            <td><strong>{{ $donhang->ma_don_hang }}</strong></td>
                             <td>{{ $donhang->tennguoinhan }}</td>
-                            <td>{{ number_format($donhang->tong_tien) }}đ</td>
+                            <td>{{ number_format($donhang->tong_thanhtien) }}₫</td>
                             <td><span class="badge rounded-pill bg-primary">{{ $donhang->phuongthuc_thanhtoan }}</span></td>
                             <td>
                                 @php
@@ -68,8 +70,9 @@
                             </td>
                             <td>{{ $donhang->created_at->timezone('Asia/Ho_Chi_Minh')->format('d/m/Y H:i') }}</td>
                             <td class="text-end">
-                                <a href="{{ route('admin.donhang.show', $donhang->ma_don_hang_chung) }}" class="btn btn-sm btn-light">Chi tiết</a>
-                                <form action="{{ route('admin.donhang.destroy', $donhang->ma_don_hang_chung) }}" method="POST" class="d-inline" onsubmit="return confirm('Bạn có chắc chắn muốn xóa đơn hàng này?');">
+                                {{-- Sửa: Dùng id_donhang để liên kết --}}
+                                <a href="{{ route('admin.donhang.show', $donhang->id_donhang) }}" class="btn btn-sm btn-light">Chi tiết</a>
+                                <form action="{{ route('admin.donhang.destroy', $donhang->id_donhang) }}" method="POST" class="d-inline" onsubmit="return confirm('Bạn có chắc chắn muốn xóa đơn hàng này?');">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" class="btn btn-sm btn-danger">Xóa</button>
@@ -85,6 +88,7 @@
                 </table>
             </div>
             <div class="pagination-area mt-3">
+                {{-- Sửa: Thêm appends để giữ lại tham số lọc khi chuyển trang --}}
                 {{ $donhangs->appends(request()->query())->links() }}
             </div>
         </div>

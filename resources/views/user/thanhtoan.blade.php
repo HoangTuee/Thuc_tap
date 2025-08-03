@@ -452,10 +452,11 @@
                                                         <div class="item-name">{{ Str::limit($item->tensanpham, 30) }}
                                                         </div>
                                                         <div class="item-quantity-price">SL: {{ $item->soluong }} x
-                                                            {{ number_format($item->giasanpham, 0, ',', '.') }}₫</div>
+                                                            {{ number_format($item->sanpham->giasanpham - ($item->sanpham->giasanpham * $item->sanpham->giakhuyenmai) / 100, 0, ',', '.') }}₫
+                                                        </div>
                                                     </div>
                                                     <div class="item-total-price">
-                                                        {{ number_format($item->giasanpham * $item->soluong, 0, ',', '.') }}₫
+                                                        {{ number_format(($item->sanpham->giasanpham - ($item->sanpham->giasanpham * $item->sanpham->giakhuyenmai) / 100) * $item->soluong, 0, ',', '.') }}₫
                                                     </div>
                                                 </div>
                                             @endforeach
@@ -493,7 +494,7 @@
                                         <div class="d-flex justify-content-between mb-3 h5">
                                             <strong>Tổng cộng</strong>
                                             <strong
-                                                class="text-primary">{{ number_format($tongtien +$shipping ?? 0, 0, ',', '.') }}₫</strong>
+                                                class="text-primary">{{ number_format($tongtien + $shipping ?? 0, 0, ',', '.') }}₫</strong>
                                         </div>
 
                                         <button type="submit" form="paymentForm"

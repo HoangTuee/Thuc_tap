@@ -132,9 +132,16 @@
                         <!-- Cart -->
                         @php
                             use App\Models\giohang;
-                            $od = 0;
+                            $od = 0; // Biến đếm số lượng
                             if (auth()->check()) {
-                                $od = giohang::where('id_user', 'LIKE', auth()->user()->id_user)->count();
+                                // Đếm các mục trong giỏ hàng...
+                                $od = giohang::where('id_user', auth()->user()->id_user)
+                                    // ...mà có sản phẩm liên quan (thông qua 'sanpham.chiTiet')...
+                                    ->whereHas('sanpham.chiTiet', function ($query) {
+                                        // ...với điều kiện 'tinhtrang_sanpham' là 'Còn hàng'.
+                                        $query->where('tinhtrang_sanpham', 'Còn hàng');
+                                    })
+                                    ->count();
                             }
                         @endphp
 
@@ -243,11 +250,11 @@
                         <a href="{{ route('sanphams') }}" class="nav-link"><i class="fa-solid fa-laptop"></i>Options</a>
                     </li>
                     <li class="nav_link">
-                        <a href="{{ route('khuyenmai') }}" class="nav-link"><i class="fa-solid fa-gift"></i>Sale</a>
+                        <a href="{{ route('viewhoadon') }}" class="nav-link"><i
+                                class="fa-solid fa-file-invoice-dollar"></i>Order</a>
                     </li>
                     <li class="nav_link">
-                        <a href="{{ route('tintuc') }}" class="nav-link"><i
-                                class="fa-solid fa-file-invoice-dollar"></i>News</a>
+                        <a href="{{ route('tintuc') }}" class="nav-link"><i class="fa-solid fa-gift"></i>News</a>
                     </li>
                     @if (Auth::check())
                         <li class="nav_link">

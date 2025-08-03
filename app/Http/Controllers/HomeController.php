@@ -12,12 +12,20 @@ class HomeController extends Controller
 {
     public function index()
     {
-        // $sanphams = sanpham::all();
-        // $sanphams = sanpham::paginate(4);
-        $hocTapVanPhong = sanpham::where('danhmuc', 'Văn Phòng - Học Tập')->paginate(4);
-        $gamingDoHoa = sanpham::where('danhmuc', 'Gaming - Đồ Họa')->paginate(4);
-        $linhKien = sanpham::where('danhmuc', 'Linh Kiện - Phụ Kiện')->paginate(4);
-        $banners = banner::all();
+        // Lấy sản phẩm Văn Phòng, đặt tên phân trang là 'vp_page'
+        $hocTapVanPhong = SanPham::where('danhmuc', 'Văn Phòng - Học Tập')
+                                 ->paginate(4, ['*'], 'vp_page');
+
+        // Lấy sản phẩm Gaming, đặt tên phân trang là 'gaming_page'
+        $gamingDoHoa = SanPham::where('danhmuc', 'Gaming - Đồ họa')
+                              ->paginate(4, ['*'], 'gaming_page');
+
+        // Lấy sản phẩm Linh kiện, đặt tên phân trang là 'lk_page'
+        $linhKien = SanPham::where('danhmuc', 'Linh Kiện - Phụ Kiện')
+                           ->paginate(4, ['*'], 'lk_page');
+
+        $banners = Banner::all();
+
         return view('index', compact('hocTapVanPhong', 'gamingDoHoa', 'linhKien', 'banners'));
     }
 

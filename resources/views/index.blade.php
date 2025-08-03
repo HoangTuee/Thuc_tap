@@ -94,7 +94,7 @@
                     </div>
                 @endforeach
                 <div class="pagination">
-                    {{ $hocTapVanPhong->links() }}
+                    {{ $hocTapVanPhong->withQueryString()->links() }}
                 </div>
             </div>
         </section>
@@ -141,7 +141,7 @@
                     </div>
                 @endforeach
                 <div class="pagination">
-                    {{ $gamingDoHoa->links() }}
+                    {{ $gamingDoHoa->withQueryString()->links() }}
                 </div>
             </div>
         </section>
@@ -191,7 +191,7 @@
                     </div>
                 @endforeach
                 <div class="pagination">
-                    {{ $linhKien->links() }}
+                    {{ $linhKien->withQueryString()->links() }}
                 </div>
             </div>
         </section>

@@ -7,6 +7,7 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\BannerController;
 use App\Http\Controllers\ChitietsanphamController;
 use App\Http\Controllers\GiohangController;
+use App\Http\Controllers\HoadonController;
 use App\Http\Controllers\Ql_donhang;
 use App\Http\Controllers\SanphamController;
 use App\Http\Controllers\ThanhtoanController;
@@ -46,10 +47,10 @@ Route::get('/khuyenmai', [UserController::class, 'khuyenmai'])->name('khuyenmai'
 Route::get('/chitietsanpham/{tensanpham}', [ChitietsanphamController::class, 'chitiet'])->name('chitiet');
 
 //gio hang
-Route::get('/giohang', [GiohangController::class, 'giohang'])->name('giohang');
+Route::get('/giohang', [GiohangController::class, 'index'])->name('giohang');
 Route::post('/add_giohang', [GiohangController::class, 'add_giohang'])->name('addgiohang');
-Route::delete('/delete_giohang/{id}', [GiohangController::class, 'delete_giohang'])->name('deletegiohang');
-Route::put('/cart/update/{id_giohang}', [GioHangController::class, 'setQuantity'])->name('cart.setQuantity');
+Route::delete('/delete_giohang/{id}', [GiohangController::class, 'remove'])->name('deletegiohang');
+Route::put('/cart/update/{id_giohang}', [GioHangController::class, 'update'])->name('cart.setQuantity');
 
 //thanh toán
 Route::get('/checkout', [ThanhtoanController::class, 'index'])->name('checkout');
@@ -104,9 +105,9 @@ Route::middleware(['admin'])->group(function () {
 
     // Routes cho Quản lý Đơn hàng
     Route::get('/don-hang', [Ql_donhang::class, 'index'])->name('qldonhang');
-    Route::get('/don-hang/chi-tiet/{ma_don_hang_chung}', [Ql_donhang::class, 'show'])->name('admin.donhang.show');
-    Route::post('/don-hang/cap-nhat-trang-thai/{ma_don_hang_chung}', [Ql_donhang::class, 'updateStatus'])->name('admin.donhang.updateStatus');
-    Route::delete('/don-hang/xoa/{ma_don_hang_chung}', [Ql_donhang::class, 'destroy'])->name('admin.donhang.destroy');
+    Route::get('/don-hang/{id_donhang}', [Ql_donhang::class, 'show'])->name('admin.donhang.show');
+    Route::put('/don-hang/{id_donhang}/update-status', [Ql_donhang::class, 'updateStatus'])->name('admin.donhang.update_status');
+    Route::delete('/don-hang/{id_donhang}', [Ql_donhang::class, 'destroy'])->name('admin.donhang.destroy');
 });
 
 //trực page
@@ -122,6 +123,18 @@ Route::get('sanpham', [SanphamController::class, 'sanphams'])->name('sanphams');
 
 Route::get('testmail',[HomeController::class, 'testmail'])->name('testmail');
 Route::get('view_quenmk',[HomeController::class, 'view_quenmk'])->name('view_quenmk');
+
+Route::middleware(['auth'])->group(function () {
+    // ... các route khác
+
+    // Route cho danh sách đơn hàng
+    Route::get('hoadon',[HoadonController::class, 'hienthihoadon'])->name('viewhoadon');
+
+    // Route cho chi tiết đơn hàng (đã có từ trước)
+    Route::get('/don-hang-cua-toi/{order}', [HoadonController::class, 'show'])->name('orders.show');
+});
+// trang hoa don khach hang
+
 
 // routes/web.php hoặc routes/auth.php (tùy Laravel)
 Route::get('/forgot-password', [HomeController::class, 'create'])->name('password.request');

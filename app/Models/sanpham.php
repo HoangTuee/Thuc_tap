@@ -23,4 +23,8 @@ class sanpham extends Model
         'danhmuc',
         'hangsanpham'
     ];
+    public function chiTiet()
+    {
+        return $this->hasOne(chitietsanpham::class, 'tensanpham','tensanpham'); // Giả sử khóa ngoại là 'id_sanpham'
+    }
 }

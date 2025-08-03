@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Chitietdonhang;
+use App\Models\Donhang;
 use Illuminate\Http\Request;
 // Sửa lại Model theo chuẩn PascalCase
 use App\Models\GioHang;
 use App\Models\SanPham;
-use App\Models\DonHang;
 // SỬA LỖI QUAN TRỌNG Ở ĐÂY: Dùng Validator của Laravel
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
@@ -42,7 +43,7 @@ class ThanhtoanController extends Controller
         $tongtien = 0;
         foreach ($thanhtoan as $item) {
             $tongsoluong += $item->soluong;
-            $tongtien += ($item->soluong * $item->giasanpham);
+            $tongtien += (($item->sanpham->giasanpham - ($item->sanpham->giasanpham * $item->sanpham->giakhuyenmai) / 100) * $item->soluong);
         }
 
         return view('user.thanhtoan', compact('thanhtoan', 'loai', 'shipping', 'tongsoluong', 'tongtien'));
@@ -53,82 +54,68 @@ class ThanhtoanController extends Controller
      */
     public function process(Request $request)
     {
-        // 1. Validation
-        $rules = [
+        $validator = Validator::make($request->all(), [
             'customer_name' => 'required|string|max:100',
             'customer_phone' => 'required|string|max:15',
             'customer_address' => 'required|string|max:255',
             'payment_method' => 'required|in:cod,card,wallet,bank',
-            'order_notes' => 'nullable|string', // Thêm validation cho ghi chú
-        ];
-
-        // Sử dụng Validator Facade đã được import đúng
-        $validator = Validator::make($request->all(), $rules);
+            'order_notes' => 'nullable|string',
+        ]);
 
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator)->withInput();
         }
 
         $user = Auth::user();
-        $cartItems = GioHang::where('id_user', $user->id_user)->get();
+        $cartItems = GioHang::with('sanpham')->where('id_user', $user->id_user)->get();
 
         if ($cartItems->isEmpty()) {
-            return redirect()->route('giohang')->with('error', 'Giỏ hàng trống, không thể thanh toán.');
+            return redirect()->route('giohang')->with('error', 'Giỏ hàng đã trống, không thể thanh toán.');
         }
 
-        // Bắt đầu transaction để đảm bảo an toàn dữ liệu
         DB::beginTransaction();
         try {
-            // Tạo một mã đơn hàng chung cho lần thanh toán này
-            $commonOrderCode = 'DH-' . strtoupper(Str::random(8));
-
-            // Lặp qua từng sản phẩm trong giỏ hàng
-            foreach ($cartItems as $item) {
-                // Dùng tensanpham từ giỏ hàng để tìm sản phẩm trong bảng sanpham
-                $product = SanPham::where('tensanpham', $item->tensanpham)->first();
-
-                // Nếu vì lý do nào đó sản phẩm không còn tồn tại, hủy đơn hàng
-                if (!$product) {
-                    // Dừng và báo lỗi ngay lập tức
-                    throw new \Exception("Sản phẩm '{$item->tensanpham}' không còn tồn tại trong cửa hàng.");
+            $totalAmount = $cartItems->sum(function ($item) {
+                if (empty($item->sanpham)) {
+                    throw new \Exception("Sản phẩm '{$item->tensanpham}' không hợp lệ.");
                 }
+                $finalPrice = $item->sanpham->giasanpham - ($item->sanpham->giasanpham * $item->sanpham->giakhuyenmai / 100);
+                return $finalPrice * $item->soluong;
+            });
 
-                // Tạo một dòng mới trong bảng DonHang
-                DonHang::create([
-                    'ma_don_hang_chung' => $commonOrderCode,
-                    'id_user' => $user->id_user,
-                    'tennguoinhan' => $request->customer_name,
-                    'sdt_nguoinhan' => $request->customer_phone,
-                    'diachi_giaohang' => $request->customer_address,
-                    'ghichu' => $request->order_notes,
-                    'phuongthuc_thanhtoan' => $request->payment_method,
-                    'trangthai' => 'Chờ xử lý',
+            $donHang = Donhang::create([
+                'ma_don_hang' => 'DH-' . strtoupper(Str::random(8)),
+                'id_user' => $user->id_user,
+                'tennguoinhan' => $request->customer_name,
+                'sdt_nguoinhan' => $request->customer_phone,
+                'diachi_giaohang' => $request->customer_address,
+                'ghichu' => $request->order_notes,
+                'phuongthuc_thanhtoan' => $request->payment_method,
+                'trangthai' => 'Chờ xử lý',
+                'tong_thanhtien' => $totalAmount + 30000,
+            ]);
 
-                    // Lấy thông tin từ sản phẩm và giỏ hàng
-                    'id_sanpham' => $product->id_sanpham,
-                    'tensanpham' => $item->tensanpham,
+            foreach ($cartItems as $item) {
+                $finalPricePerItem = $item->sanpham->giasanpham - ($item->sanpham->giasanpham * $item->sanpham->giakhuyenmai / 100);
+
+                Chitietdonhang::create([
+                    'id_donhang' => $donHang->id_donhang,
+                    'id_sanpham' => $item->sanpham->id_sanpham,
                     'soluong' => $item->soluong,
-                    'gia' => $item->giasanpham,
-                    'thanhtien' => $item->giasanpham * $item->soluong,
+                    'gia' => $finalPricePerItem,
+                    'thanhtien' => $finalPricePerItem * $item->soluong,
                 ]);
             }
 
-            // Xóa giỏ hàng sau khi đã đặt hàng thành công
             GioHang::where('id_user', $user->id_user)->delete();
-
-            // Nếu mọi thứ ổn, lưu thay đổi vào database
             DB::commit();
 
-            // Giả sử bạn có route tên 'thanhtoan.success' để hiển thị trang báo thành công
-            return redirect()->route('thanhtoan.success')->with('success', 'Đặt hàng thành công!');
+            return redirect()->route('thanhtoan.success')->with('order_code', $donHang->ma_don_hang);
 
         } catch (\Exception $e) {
-            // Nếu có lỗi, hoàn tác tất cả các thay đổi
             DB::rollBack();
-            // Ghi lại lỗi để debug
-            Log::error('Lỗi đặt hàng: ' . $e->getMessage());
-            // Trả về trang thanh toán với thông báo lỗi
-            return redirect()->back()->with('error', 'Đã có lỗi xảy ra: ' . $e->getMessage())->withInput();
+            Log::error('Lỗi đặt hàng: ' . $e->getMessage() . ' tại dòng ' . $e->getLine() . ' trong file ' . $e->getFile());
+            return redirect()->back()->with('error', 'Lỗi chi tiết: ' . $e->getMessage())->withInput();
         }
     }
 }

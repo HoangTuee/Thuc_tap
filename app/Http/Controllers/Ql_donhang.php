@@ -9,90 +9,74 @@ use Illuminate\Support\Facades\DB;
 
 class Ql_donhang extends Controller
 {
-    /**
-     * Hiển thị danh sách các đơn hàng đã được nhóm lại.
-     */
     public function index(Request $request)
     {
-        $query = DonHang::query()
-            ->select(
-                'ma_don_hang_chung',
-                'tennguoinhan',
-                'sdt_nguoinhan',
-                'phuongthuc_thanhtoan',
-                'trangthai',
-                'created_at',
-                DB::raw('SUM(thanhtien) as tong_tien')
-            )
-            ->groupBy('ma_don_hang_chung', 'tennguoinhan', 'sdt_nguoinhan', 'phuongthuc_thanhtoan', 'trangthai', 'created_at')
-            ->orderBy('created_at', 'desc');
+        // Bắt đầu một query mới, sắp xếp theo ngày tạo mới nhất
+        $query = DonHang::query()->orderBy('created_at', 'desc');
 
-        // Xử lý tìm kiếm
-        if ($keyword = $request->input('keyword')) {
-            $query->where(function($q) use ($keyword) {
-                $q->where('ma_don_hang_chung', 'like', "%{$keyword}%")
-                  ->orWhere('tennguoinhan', 'like', "%{$keyword}%")
-                  ->orWhere('sdt_nguoinhan', 'like', "%{$keyword}%");
+        // Lọc theo từ khóa (mã đơn hàng, tên hoặc SĐT người nhận)
+        if ($request->filled('keyword')) {
+            $keyword = $request->keyword;
+            $query->where(function ($q) use ($keyword) {
+                $q->where('ma_don_hang', 'like', "%{$keyword}%")
+                    ->orWhere('tennguoinhan', 'like', "%{$keyword}%")
+                    ->orWhere('sdt_nguoinhan', 'like', "%{$keyword}%");
             });
         }
 
-        // Xử lý lọc theo trạng thái
-        if ($status = $request->input('status')) {
-            if ($status != 'all') {
-                 $query->where('trangthai', $status);
-            }
+        // Lọc theo trạng thái đơn hàng
+        if ($request->filled('status') && $request->status != 'all') {
+            $query->where('trangthai', $request->status);
         }
 
-        $donhangs = $query->paginate(10); // Phân trang, 10 đơn hàng mỗi trang
+        // Lấy kết quả đã phân trang
+        $donhangs = $query->paginate(15);
 
         return view('admin.ql_donhang', compact('donhangs'));
     }
 
     /**
-     * Hiển thị chi tiết một đơn hàng.
+     * Hiển thị chi tiết của một đơn hàng.
      */
-    public function show($ma_don_hang_chung)
+    public function show($id_donhang)
     {
-        $order_items = DonHang::where('ma_don_hang_chung', $ma_don_hang_chung)->get();
+        // Dùng with() để tải sẵn chi tiết đơn hàng và thông tin sản phẩm liên quan
+        // Giúp tối ưu hiệu năng, tránh query N+1
+        $donhang = DonHang::with('chiTietDonHangs.sanpham')->findOrFail($id_donhang);
 
-        if ($order_items->isEmpty()) {
-            return redirect()->route('admin.donhang.index')->with('error', 'Không tìm thấy đơn hàng.');
-        }
-
-        // Lấy thông tin chung từ sản phẩm đầu tiên
-        $order_info = $order_items->first();
-
-        // Tính toán lại tổng tiền để hiển thị
-        $total = $order_items->sum('thanhtien');
-        $shipping = 30000; // Giả sử phí ship cố định
-        $grand_total = $total + $shipping;
-
-
-        return view('admin.ql_chitietdonhang', compact('order_items', 'order_info', 'total', 'shipping', 'grand_total'));
+        return view('admin.ql_chitietdonhang', compact('donhang'));
     }
 
     /**
-     * Cập nhật trạng thái đơn hàng.
+     * Cập nhật trạng thái của một đơn hàng.
      */
-    public function updateStatus(Request $request, $ma_don_hang_chung)
+    public function updateStatus(Request $request, $id_donhang)
     {
         $request->validate([
-            'trangthai' => 'required|string|in:Chờ xử lý,Đang giao,Hoàn thành,Đã hủy',
+            'trangthai' => 'required|in:Chờ xử lý,Đang giao,Hoàn thành,Đã hủy'
         ]);
 
-        DonHang::where('ma_don_hang_chung', $ma_don_hang_chung)
-               ->update(['trangthai' => $request->trangthai]);
+        $donhang = DonHang::findOrFail($id_donhang);
+        $donhang->trangthai = $request->trangthai;
+        $donhang->save();
 
-        return redirect()->back()->with('success', 'Cập nhật trạng thái đơn hàng thành công!');
+        return redirect()->route('admin.donhang.show', $donhang->id_donhang)
+            ->with('success', 'Cập nhật trạng thái đơn hàng thành công!');
     }
 
     /**
-     * Xóa một đơn hàng (tất cả các mục liên quan).
+     * Xóa một đơn hàng.
      */
-    public function destroy($ma_don_hang_chung)
+    public function destroy($id_donhang)
     {
-        DonHang::where('ma_don_hang_chung', $ma_don_hang_chung)->delete();
+        $donhang = DonHang::findOrFail($id_donhang);
 
-        return redirect()->route('ql_donnhang')->with('success', 'Đã xóa đơn hàng thành công.');
+        // Giả sử bạn đã thiết lập onDelete('cascade') trong migration
+        // Nếu không, bạn cần xóa các chi tiết đơn hàng liên quan trước
+        // $donhang->chiTietDonHangs()->delete();
+        $donhang->delete();
+
+        return redirect()->route('admin.donhang.index')
+            ->with('success', 'Xóa đơn hàng thành công!');
     }
 }

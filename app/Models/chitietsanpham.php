@@ -21,4 +21,8 @@ class chitietsanpham extends Model
         'anhchitiet3',
         'anhchitiet4'
     ];
+    public function sanpham()
+    {
+        return $this->belongsTo(sanpham::class, 'tensanpham','tensanpham');
+    }
 }

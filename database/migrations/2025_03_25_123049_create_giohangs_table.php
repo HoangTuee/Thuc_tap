@@ -14,11 +14,11 @@ return new class extends Migration
         Schema::create('giohang', function (Blueprint $table) {
             $table->id('id_giohang');
             $table->unsignedBigInteger('id_user');
-            $table->string('tensanpham',100)->unique();
+            $table->string('tensanpham',100);
             $table->integer('soluong');
-            $table->integer('giasanpham');
             $table->foreign('id_user')->references('id_user')->on('users')->onDelete('cascade');
             $table->foreign('tensanpham')->references('tensanpham')->on('sanpham')->onDelete('cascade');
+            $table->unique(['id_user', 'tensanpham']);
         });
     }
 

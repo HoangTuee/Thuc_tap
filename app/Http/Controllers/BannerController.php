@@ -4,13 +4,15 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\banner;
+use App\Models\sanpham;
 
 class BannerController extends Controller
 {
     //ql banner
     public function view_add_banner()
     {
-        return view('admin.form.Add_banner');
+        $allProducts = sanpham::select('tensanpham')->distinct()->get();
+        return view('admin.form.Add_banner', compact('allProducts'));
     }
     public function add_banner(Request $request)
     {

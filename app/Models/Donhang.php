@@ -11,7 +11,7 @@ class Donhang extends Model
     protected $table = 'donhang';
     protected $primaryKey = 'id_donhang';
     protected $fillable = [
-        'ma_don_hang_chung',
+        'ma_don_hang',
         'id_user',
         'tennguoinhan',
         'sdt_nguoinhan',
@@ -19,10 +19,17 @@ class Donhang extends Model
         'ghichu',
         'phuongthuc_thanhtoan',
         'trangthai',
-        'id_sanpham',
-        'tensanpham',
-        'soluong',
-        'gia',
-        'thanhtien',
+        'tong_thanhtien',
     ];
+
+        public function chiTietDonHangs()
+    {
+        // Model DonHang có nhiều ChiTietDonHang
+        return $this->hasMany(ChiTietDonHang::class, 'id_donhang', 'id_donhang');
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'id_user', 'id_user');
+    }
 }

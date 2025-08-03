@@ -91,6 +91,7 @@ class SanphamController extends Controller
         return view('admin/ql_sanpham', compact('sanphams', 'sanphamHasDetail'));
     }
 
+    //tim kiem cua khach hang
     public function search(Request $request)
     {
         // Lấy giá trị tìm kiếm từ request
@@ -110,9 +111,8 @@ class SanphamController extends Controller
         if ($sanphams == null) {
             return redirect()->route('search')->with('success', 'Sản phẩm không tồn tại');
         } else {
-            return view('user.timkiem', compact('sanphams', 'search', 'sanphamHasDetail'));
+            return view('user.timkiem', compact('sanphams', 'search'));
         }
-
     }
 
     public function sanphams(Request $request)
@@ -121,15 +121,17 @@ class SanphamController extends Controller
         $sanphams = sanpham::paginate(8);
         return view('user.sanpham', compact('sanphams', 'banners'));
     }
+
+    //Tim kiem cua admin
     public function timKiem(Request $request)
     {
         $keyword = $request->input('keyword');
-
+        $sanphamHasDetail = chitietsanpham::pluck('tensanpham')->toArray();
         $sanphams = SanPham::where('tensanpham', 'LIKE', "%{$keyword}%")
             ->orWhere('hangsanpham', 'LIKE', "%{$keyword}%")
             ->orWhere('danhmuc', 'LIKE', "%{$keyword}%")
             ->paginate(10);
 
-        return view('admin/ql_sanpham', compact('sanphams'));
+        return view('admin/ql_sanpham', compact('sanphams', 'sanphamHasDetail'));
     }
 }
